@@ -19,9 +19,15 @@ public class Controller {
     @Autowired
     private PaymentFactory paymentFactory;
 
+    /**
+     * Make Payments do payments through Factory Design Pattern
+     * @param request
+     * @param dto
+     * @return
+     */
     @PostMapping
     public ResponseEntity<Object> makePayment(
-            HttpServletRequest request,
+                HttpServletRequest request,
             @RequestBody InternalPaymentsRequestDTO dto) {
 
         PaymentsProcessor processor = paymentFactory.getPaymentMethodType(dto.getTransactionType());
