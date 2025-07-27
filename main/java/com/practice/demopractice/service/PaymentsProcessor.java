@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 
 public interface PaymentsProcessor {
 
-        ResponseEntity<Object> processPayment(HttpServletRequest request, InternalPaymentsRequestDTO requestBody);
+        public ResponseEntity<Object> processPayment(HttpServletRequest request, InternalPaymentsRequestDTO requestBody);
 
-        TransactionType getType(); // ✅ must be implemented
+        public TransactionType getType(); // ✅ must be implemented
     }

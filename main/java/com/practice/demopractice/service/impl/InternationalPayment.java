@@ -14,7 +14,7 @@ public class InternationalPayment implements PaymentsProcessor {
 
     @Override
     public ResponseEntity<Object> processPayment(HttpServletRequest request, InternalPaymentsRequestDTO requestBody) {
-        return new ResponseEntity<>("InternationalPayment", HttpStatus.OK);
+        return new ResponseEntity<>("InternationalPayment Implementation", HttpStatus.OK);
     }
 
     public TransactionType getType() {
