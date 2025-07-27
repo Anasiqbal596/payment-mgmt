@@ -3,10 +3,11 @@ package com.practice.demopractice.dto;
 public class InternalPaymentsRequestDTO {
 
 
+
     private String amount;
     private int fee;
-
     private String transactionType;
+    private String userName;
 
     public String getTransactionType() {
         return transactionType;

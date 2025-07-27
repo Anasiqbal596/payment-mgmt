@@ -26,11 +26,10 @@ public class Controller {
      * @return
      */
     @PostMapping
-    public ResponseEntity<Object> makePayment(
-                HttpServletRequest request,
-            @RequestBody InternalPaymentsRequestDTO dto) {
+    public ResponseEntity<Object> makePayment(HttpServletRequest request, @RequestBody InternalPaymentsRequestDTO dto) {
         //based on transaction type get payment implementation
         PaymentsProcessor processor = paymentFactory.getPaymentMethodType(dto.getTransactionType());
+        //call the specific payment
         return processor.processPayment(request, dto);
     }
 }

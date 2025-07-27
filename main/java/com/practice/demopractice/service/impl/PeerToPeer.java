@@ -15,7 +15,7 @@ public class PeerToPeer implements PaymentsProcessor {
 
     @Override
     public ResponseEntity<Object> processPayment(HttpServletRequest request, InternalPaymentsRequestDTO requestBody) {
-        return new ResponseEntity<>("PeerToPeer", HttpStatus.OK);
+        return new ResponseEntity<>("PeerToPeer Implementation", HttpStatus.OK);
     }
 
     public TransactionType getType() {
