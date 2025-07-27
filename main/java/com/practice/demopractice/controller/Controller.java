@@ -29,7 +29,7 @@ public class Controller {
     public ResponseEntity<Object> makePayment(
                 HttpServletRequest request,
             @RequestBody InternalPaymentsRequestDTO dto) {
-
+        //based on transaction type get payment implementation
         PaymentsProcessor processor = paymentFactory.getPaymentMethodType(dto.getTransactionType());
         return processor.processPayment(request, dto);
     }
