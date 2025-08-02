@@ -1,23 +1,22 @@
-package com.practice.demopractice.service.impl;
+package com.practice.demopractice.service;
 
 import com.practice.demopractice.dto.InternalPaymentsRequestDTO;
 import com.practice.demopractice.enums.TransactionType;
-import com.practice.demopractice.service.PaymentsProcessor;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+
 @Service
-public class WalletPayment implements PaymentsProcessor {
+public class PeerToPeer implements PaymentsProcessor {
 
     @Override
     public ResponseEntity<Object> processPayment(HttpServletRequest request, InternalPaymentsRequestDTO requestBody) {
-        return ResponseEntity.ok("Processed Wallet Payment");
+        return new ResponseEntity<>("PeerToPeer Implementation", HttpStatus.OK);
     }
 
-    @Override
     public TransactionType getType() {
-        return TransactionType.WALLET; // Ensure this matches your enum
+        return TransactionType.PEER;
     }
 }

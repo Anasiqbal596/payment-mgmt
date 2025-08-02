@@ -2,7 +2,6 @@ package com.practice.demopractice.controller;
 
 import com.practice.demopractice.dto.InternalPaymentsRequestDTO;
 import com.practice.demopractice.factory.PaymentFactory;
-import com.practice.demopractice.service.PaymentServiceImpl;
 import com.practice.demopractice.service.PaymentsProcessor;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
