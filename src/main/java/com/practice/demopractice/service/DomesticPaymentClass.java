@@ -1,10 +1,8 @@
-package com.practice.demopractice.service.impl;
+package com.practice.demopractice.service;
 
 import com.practice.demopractice.dto.InternalPaymentsRequestDTO;
 import com.practice.demopractice.enums.TransactionType;
-import com.practice.demopractice.service.PaymentsProcessor;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 

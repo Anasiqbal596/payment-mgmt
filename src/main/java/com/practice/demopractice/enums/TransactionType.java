@@ -1,8 +1,9 @@
 package com.practice.demopractice.enums;
 
 public enum TransactionType {
-
-
-      WALLET,REMITANCE,PEER,DOMESTIC,INTERNATIONAL;
-
+      WALLET,
+      REMITANCE,
+      PEER,
+      DOMESTIC,
+      INTERNATIONAL
 }
