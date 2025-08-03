@@ -47,7 +47,14 @@ public class PaymentServiceImpl implements PaymentService {
         try {
             TransactionType transactionType = TransactionType.valueOf(dto.getTransactionType().toUpperCase());
 
-            Payment payment = Payment.builder().user(user).amount(dto.getAmount()).fee(dto.getFee()).transactionType(transactionType).createdDate(LocalDateTime.now()).status(PaymentStatus.PENDING).build();
+            Payment payment = Payment.builder()
+                    .user(user)
+                    .amount(dto.getAmount())
+                    .fee(dto.getFee())
+                    .transactionType(transactionType)
+                    .createdDate(LocalDateTime.now())
+                    .status(PaymentStatus.PENDING)
+                    .build();
 
             payment = paymentRepo.save(payment);
 

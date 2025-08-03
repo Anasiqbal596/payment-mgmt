@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,18 +24,27 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseDTO createUser(UserRequestDTO dto) {
-        if (userRepo.findByUsername(dto.getUsername()).isPresent()) {
+        Optional<User> userData = userRepo.findByUsername(dto.getUsername());
+        if (userData.isPresent()) {
+
             return ResponseDTO.builder()
-                    .status("fail")
+                    .status("Fail")
                     .statusCode(400)
                     .message("Username already exists")
                     .build();
-        }
 
+        }
         try {
+
+
+            String n = null;
+            if(n.contains("abc")){
+                System.out.println("123");
+            }
+            int a=10/0;
             UserRole role = UserRole.valueOf(dto.getRole().toUpperCase());
 
-            User user = User.builder()
+            User user = User.builder()// avoid overload constructor
                     .username(dto.getUsername())
                     .password(passwordEncoder.encode(dto.getPassword()))
                     .role(role)
@@ -53,13 +59,37 @@ public class UserServiceImpl implements UserService {
                     .data(convertUserToMap(savedUser))
                     .build();
 
-        } catch (IllegalArgumentException e) {
+        } catch (ArithmeticException e) {
+            System.out.println("Exception: "+e.getMessage()+" path : ");
+            for (StackTraceElement el : e.getStackTrace()) {
+                System.out.println(el);
+            }
+            return ResponseDTO.builder()
+                    .status("fail")
+                    .statusCode(400)
+                    .message(e.getMessage())
+                    .build();
+
+        }catch (NullPointerException e) {
+            e.printStackTrace();
+            return ResponseDTO.builder()
+                    .status("fail")
+                    .statusCode(400)
+                    .message(e.getMessage())
+                    .build();
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
             return ResponseDTO.builder()
                     .status("fail")
                     .statusCode(400)
                     .message("Invalid role specified. Must be ADMIN or USER")
                     .build();
+
         }
+
+
     }
 
     @Override
