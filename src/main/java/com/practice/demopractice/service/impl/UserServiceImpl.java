@@ -36,12 +36,6 @@ public class UserServiceImpl implements UserService {
         }
         try {
 
-
-            String n = null;
-            if(n.contains("abc")){
-                System.out.println("123");
-            }
-            int a=10/0;
             UserRole role = UserRole.valueOf(dto.getRole().toUpperCase());
 
             User user = User.builder()// avoid overload constructor
@@ -72,10 +66,19 @@ public class UserServiceImpl implements UserService {
 
         }catch (NullPointerException e) {
             e.printStackTrace();
-            return ResponseDTO.builder()
+            ResponseDTO fail = ResponseDTO.builder()
                     .status("fail")
                     .statusCode(400)
                     .message(e.getMessage())
+                    .build();
+            return fail;
+
+        }catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            return ResponseDTO.builder()
+                    .status("fail")
+                    .statusCode(400)
+                    .message("Invalid role specified. Must be ADMIN or USER")
                     .build();
 
         }
@@ -84,9 +87,11 @@ public class UserServiceImpl implements UserService {
             return ResponseDTO.builder()
                     .status("fail")
                     .statusCode(400)
-                    .message("Invalid role specified. Must be ADMIN or USER")
+                    .message(e.getMessage())
                     .build();
 
+        }finally {
+            System.out.println("Before return");
         }
 
 

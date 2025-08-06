@@ -2,32 +2,32 @@ package com.practice.demopractice.service.impl;
 
 import com.practice.demopractice.Repository.PaymentRepository;
 import com.practice.demopractice.Repository.UserRepository;
-import com.practice.demopractice.dto.InternalPaymentsRequestDTO;
-import com.practice.demopractice.dto.ResponseDTO;
+import com.practice.demopractice.dto.*;
 import com.practice.demopractice.entity.Payment;
 import com.practice.demopractice.entity.User;
 import com.practice.demopractice.enums.PaymentStatus;
 import com.practice.demopractice.enums.TransactionType;
 import com.practice.demopractice.service.PaymentService;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional; // Fixed import
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class PaymentServiceImpl implements PaymentService {
 
-    @Autowired
-    UserRepository userRepo;
-    @Autowired
-    PaymentRepository paymentRepo;
+    private final UserRepository userRepo;
+    private final PaymentRepository paymentRepo;
 
     @Autowired
     public PaymentServiceImpl(UserRepository userRepo, PaymentRepository paymentRepo) {
@@ -35,66 +35,84 @@ public class PaymentServiceImpl implements PaymentService {
         this.paymentRepo = paymentRepo;
     }
 
+    private ResponseDTO buildSuccess(String message, HttpStatus status, Object data) {
+        return ResponseDTO.builder()
+                .status("success")
+                .statusCode(status.value())
+                .message(message)
+                .data(data)
+                .build();
+    }
+
+    private ResponseDTO buildError(String message, HttpStatus status) {
+        return ResponseDTO.builder()
+                .status("error")
+                .statusCode(status.value())
+                .message(message)
+                .build();
+    }
+
+    private PaymentResponseDto toDto(Payment payment) {
+        return PaymentResponseDto.builder()
+                .id(payment.getId())
+                .amount(payment.getAmount())
+                .fee(payment.getFee())
+                .transactionType(payment.getTransactionType())
+                .payerId(payment.getUser().getId())
+                .recipientId(payment.getRecipient().getId())
+                .createdDate(payment.getCreatedDate())
+                .status(payment.getStatus())
+                .build();
+    }
+
     @Override
     @Transactional
     public ResponseDTO makePayment(InternalPaymentsRequestDTO dto) {
-        Optional<User> userOptional = userRepo.findById(dto.getUserId());
-        if (userOptional.isEmpty()) {
-            return ResponseDTO.builder().status("error").statusCode(HttpStatus.NOT_FOUND.value()).message("User not found with ID: " + dto.getUserId()).build();
-        }
-        User user = userOptional.get();
+        var userOpt = userRepo.findById(dto.getUserId());
+        if (userOpt.isEmpty()) return buildError("User not found", HttpStatus.NOT_FOUND);
+
+        var recOpt = userRepo.findById(dto.getRecipientId());
+        if (recOpt.isEmpty()) return buildError("Recipient not found", HttpStatus.NOT_FOUND);
 
         try {
-            TransactionType transactionType = TransactionType.valueOf(dto.getTransactionType().toUpperCase());
-
-            Payment payment = Payment.builder()
-                    .user(user)
+            TransactionType tx = TransactionType.valueOf(dto.getTransactionType().toUpperCase());
+            Payment pay = Payment.builder()
+                    .user(userOpt.get())
+                    .recipient(recOpt.get())
                     .amount(dto.getAmount())
                     .fee(dto.getFee())
-                    .transactionType(transactionType)
-                    .createdDate(LocalDateTime.now())
+                    .transactionType(tx)
                     .status(PaymentStatus.PENDING)
+                    .createdDate(LocalDateTime.now())
                     .build();
 
-            payment = paymentRepo.save(payment);
+            pay = paymentRepo.save(pay);
+            pay.setStatus(PaymentStatus.SUCCESS);
+            pay = paymentRepo.save(pay);
 
-            // Simulate payment processing
-            payment.setStatus(PaymentStatus.SUCCESS);
-            payment = paymentRepo.save(payment);
-
-            return ResponseDTO.builder().status("success").statusCode(HttpStatus.CREATED.value()).data(convertPaymentToMap(payment)).message("Payment processed successfully").build();
-
+            return buildSuccess("Payment successful", HttpStatus.CREATED, toDto(pay));
         } catch (IllegalArgumentException e) {
-            return ResponseDTO.builder().status("error").statusCode(HttpStatus.BAD_REQUEST.value()).message("Invalid transaction type: " + dto.getTransactionType()).build();
+            return buildError("Invalid transaction type", HttpStatus.BAD_REQUEST);
         }
     }
 
     @Override
     public ResponseDTO getAllPayments() {
-        List<Payment> payments = paymentRepo.findAll();
-        if (payments.isEmpty()) {
-            return ResponseDTO.builder().status("success").statusCode(HttpStatus.OK.value()).message("No payments found").build();
-        }
-
-        List<Map<String, Object>> paymentList = payments.stream().map(this::convertPaymentToMap).collect(Collectors.toList());
-
-        return ResponseDTO.builder().status("success").statusCode(HttpStatus.OK.value()).data(paymentList).message("Found " + paymentList.size() + " payments").build();
+        var list = paymentRepo.findAll();
+        if (list.isEmpty()) return buildSuccess("No payments", HttpStatus.OK, List.of());
+        return buildSuccess("Found " + list.size(), HttpStatus.OK,
+                list.stream().map(this::toDto).collect(Collectors.toList()));
     }
 
     @Override
     public ResponseDTO getPaymentById(String id) {
         try {
-            Long paymentId = Long.parseLong(id);
-            Optional<Payment> paymentOptional = paymentRepo.findById(paymentId);
-
-            if (paymentOptional.isEmpty()) {
-                return ResponseDTO.builder().status("error").statusCode(HttpStatus.NOT_FOUND.value()).message("Payment not found with ID: " + id).build();
-            }
-
-            return ResponseDTO.builder().status("success").statusCode(HttpStatus.OK.value()).data(convertPaymentToMap(paymentOptional.get())).message("Payment retrieved successfully").build();
-
+            var pid = Long.parseLong(id);
+            return paymentRepo.findById(pid)
+                    .map(p -> buildSuccess("OK", HttpStatus.OK, toDto(p)))
+                    .orElse(buildError("Not found", HttpStatus.NOT_FOUND));
         } catch (NumberFormatException e) {
-            return ResponseDTO.builder().status("error").statusCode(HttpStatus.BAD_REQUEST.value()).message("Invalid payment ID format").build();
+            return buildError("Bad ID", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -102,35 +120,25 @@ public class PaymentServiceImpl implements PaymentService {
     @Transactional
     public ResponseDTO updatePayment(String id, InternalPaymentsRequestDTO dto) {
         try {
-            Long paymentId = Long.parseLong(id);
-            Optional<Payment> paymentOptional = paymentRepo.findById(paymentId);
+            var pid = Long.parseLong(id);
+            var opt = paymentRepo.findById(pid);
+            if (opt.isEmpty()) return buildError("Not found", HttpStatus.NOT_FOUND);
 
-            if (paymentOptional.isEmpty()) {
-                return ResponseDTO.builder().status("error").statusCode(HttpStatus.NOT_FOUND.value()).message("Payment not found with ID: " + id).build();
+            var p = opt.get();
+            p.setAmount(dto.getAmount());
+            p.setFee(dto.getFee());
+            p.setTransactionType(TransactionType.valueOf(dto.getTransactionType().toUpperCase()));
+            if (dto.getStatus() != null) p.setStatus(PaymentStatus.valueOf(dto.getStatus().toUpperCase()));
+            if (dto.getRecipientId() != null) {
+                userRepo.findById(dto.getRecipientId())
+                        .ifPresentOrElse(p::setRecipient,
+                                () -> {
+                                    throw new IllegalArgumentException("Bad recipient");
+                                });
             }
-
-            Payment payment = paymentOptional.get();
-
-            try {
-                // Update payment fields
-                payment.setAmount(dto.getAmount());
-                payment.setFee(dto.getFee());
-                payment.setTransactionType(TransactionType.valueOf(dto.getTransactionType().toUpperCase()));
-
-                if (dto.getStatus() != null && !dto.getStatus().isEmpty()) {
-                    payment.setStatus(PaymentStatus.valueOf(dto.getStatus().toUpperCase()));
-                }
-
-                payment = paymentRepo.save(payment);
-
-                return ResponseDTO.builder().status("success").statusCode(HttpStatus.OK.value()).data(convertPaymentToMap(payment)).message("Payment updated successfully").build();
-
-            } catch (IllegalArgumentException e) {
-                return ResponseDTO.builder().status("error").statusCode(HttpStatus.BAD_REQUEST.value()).message("Invalid enum value: " + e.getMessage()).build();
-            }
-
-        } catch (NumberFormatException e) {
-            return ResponseDTO.builder().status("error").statusCode(HttpStatus.BAD_REQUEST.value()).message("Invalid payment ID format").build();
+            return buildSuccess("Updated", HttpStatus.OK, toDto(paymentRepo.save(p)));
+        } catch (Exception e) {
+            return buildError("Error: " + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -138,30 +146,85 @@ public class PaymentServiceImpl implements PaymentService {
     @Transactional
     public ResponseDTO deletePayment(String id) {
         try {
-            Long paymentId = Long.parseLong(id);
-
-            if (!paymentRepo.existsById(paymentId)) {
-                return ResponseDTO.builder().status("error").statusCode(HttpStatus.NOT_FOUND.value()).message("Payment not found with ID: " + id).build();
-            }
-
-            paymentRepo.deleteById(paymentId);
-
-            return ResponseDTO.builder().status("success").statusCode(HttpStatus.OK.value()).message("Payment deleted successfully").build();
-
+            var pid = Long.parseLong(id);
+            if (!paymentRepo.existsById(pid)) return buildError("Not found", HttpStatus.NOT_FOUND);
+            paymentRepo.deleteById(pid);
+            return buildSuccess("Deleted", HttpStatus.OK, null);
         } catch (NumberFormatException e) {
-            return ResponseDTO.builder().status("error").statusCode(HttpStatus.BAD_REQUEST.value()).message("Invalid payment ID format").build();
+            return buildError("Bad ID", HttpStatus.BAD_REQUEST);
         }
     }
 
-    private Map<String, Object> convertPaymentToMap(Payment payment) {
-        Map<String, Object> paymentMap = new HashMap<>();
-        paymentMap.put("id", payment.getId());
-        paymentMap.put("userId", payment.getUser().getId());
-        paymentMap.put("amount", payment.getAmount());
-        paymentMap.put("fee", payment.getFee());
-        paymentMap.put("transactionType", payment.getTransactionType().name());
-        paymentMap.put("status", payment.getStatus().name());
-        paymentMap.put("createdDate", payment.getCreatedDate());
-        return paymentMap;
+    @Override
+    @Transactional(readOnly = true) // Now using Spring's Transactional
+    public ResponseDTO getPaymentHistory(PaymentHistoryRequest req) {
+        // 1) Load authenticated user
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepo.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        // DEBUG: Print authenticated user info
+        System.out.println("Authenticated User ID: " + user.getId());
+        System.out.println("Authenticated Username: " + username);
+
+        // 2) Build specification to get payments where user is either payer OR recipient
+        Specification<Payment> spec = (root, query, cb) ->
+                cb.or(
+                        cb.equal(root.get("user").get("id"), user.getId()),      // User is payer
+                        cb.equal(root.get("recipient").get("id"), user.getId()) // User is recipient
+                );
+
+        // 3) Apply date filters
+        if (req.getStartDate() != null) {
+            LocalDateTime start = req.getStartDate().atStartOfDay();
+            spec = spec.and((root, query, cb) ->
+                    cb.greaterThanOrEqualTo(root.get("createdDate"), start));
+        }
+        if (req.getEndDate() != null) {
+            LocalDateTime end = req.getEndDate().atTime(LocalTime.MAX);
+            spec = spec.and((root, query, cb) ->
+                    cb.lessThanOrEqualTo(root.get("createdDate"), end));
+        }
+
+        // 4) Apply other filters
+        if (req.getTransactionType() != null) {
+            spec = spec.and((root, query, cb) ->
+                    cb.equal(root.get("transactionType"), req.getTransactionType()));
+        }
+        if (req.getStatus() != null) {
+            spec = spec.and((root, query, cb) ->
+                    cb.equal(root.get("status"), req.getStatus()));
+        }
+
+        // 5) Create page request with sorting
+        Pageable pageable = PageRequest.of(
+                req.getPage(),
+                req.getSize(),
+                Sort.by(Sort.Direction.DESC, "createdDate")
+        );
+
+        // 6) Execute query
+        Page<Payment> page = paymentRepo.findAll(spec, pageable);
+
+        // 7) Convert to DTOs
+        List<PaymentResponseDto> dtos = page.getContent().stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
+
+        // 8) Prepare pagination metadata
+        Map<String, Object> meta = Map.of(
+                "page", page.getNumber(),
+                "size", page.getSize(),
+                "total", page.getTotalElements(),
+                "pages", page.getTotalPages()
+        );
+
+        return ResponseDTO.builder()
+                .status("success")
+                .statusCode(HttpStatus.OK.value())
+                .message("Payment history retrieved")
+                .data(dtos)
+                .pageData(meta)
+                .build();
     }
 }

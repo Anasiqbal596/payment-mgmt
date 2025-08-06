@@ -5,5 +5,7 @@ public enum TransactionType {
       REMITANCE,
       PEER,
       DOMESTIC,
-      INTERNATIONAL
+      INTERNATIONAL,
+      CREDIT,  // Received payment
+      DEBIT    // Sent payment
 }

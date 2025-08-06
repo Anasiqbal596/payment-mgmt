@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "payments")
 @Data
@@ -17,7 +18,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class Payment {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -30,12 +30,15 @@ public class Payment {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
+    private User user;  // Payer
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "recipient_id")
+    private User recipient;  // Receiver
 
     private LocalDateTime createdDate;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private PaymentStatus status;
-
 }

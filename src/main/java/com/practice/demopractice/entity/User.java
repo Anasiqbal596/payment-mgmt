@@ -1,22 +1,20 @@
 package com.practice.demopractice.entity;
 
-
-import com.practice.demopractice.enums.TransactionType;
 import com.practice.demopractice.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
 
-@Data // Marks this class as a JPA entity (i.e., a table)
-@Table(name = "users") // Optional: sets the table name in the DB
-@NoArgsConstructor // Generates no-args constructor (required by JPA)
-@AllArgsConstructor // Generates constructor with all fields
-@Component
+@Data
 @Entity
+@Table(name = "users")
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class User {
     @Id
@@ -33,6 +31,11 @@ public class User {
     @Column(nullable = false)
     private UserRole role;
 
+    // Payments where user is the PAYER
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Payment> sentPayments = new ArrayList<>();
 
-
+    // Payments where user is the RECIPIENT
+    @OneToMany(mappedBy = "recipient", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Payment> receivedPayments = new ArrayList<>();
 }

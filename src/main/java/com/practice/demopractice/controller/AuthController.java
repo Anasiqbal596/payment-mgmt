@@ -39,9 +39,8 @@ public class AuthController {
         System.out.println("Login attempt for: " + dto.getUsername());
 
         try {
-            Authentication auth = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(dto.getUsername(), dto.getPassword())
-            );
+            Authentication authentication = new UsernamePasswordAuthenticationToken(dto.getUsername(), dto.getPassword());
+            Authentication auth = authenticationManager.authenticate(authentication );
 
             System.out.println("Authentication successful: " + auth.getName());
 
