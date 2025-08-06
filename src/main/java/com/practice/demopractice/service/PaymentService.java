@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 @Service
 public interface PaymentService {
-    ResponseDTO makePayment(InternalPaymentsRequestDTO dto);
+    ResponseDTO createPaymentRequest(InternalPaymentsRequestDTO dto);
     ResponseDTO getAllPayments();
     ResponseDTO getPaymentById(String id);
     ResponseDTO updatePayment(String id, InternalPaymentsRequestDTO dto);

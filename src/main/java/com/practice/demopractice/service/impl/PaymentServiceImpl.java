@@ -7,6 +7,7 @@ import com.practice.demopractice.entity.Payment;
 import com.practice.demopractice.entity.User;
 import com.practice.demopractice.enums.PaymentStatus;
 import com.practice.demopractice.enums.TransactionType;
+import com.practice.demopractice.enums.UserRole;
 import com.practice.demopractice.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
@@ -67,7 +68,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     @Transactional
-    public ResponseDTO makePayment(InternalPaymentsRequestDTO dto) {
+    public ResponseDTO createPaymentRequest(InternalPaymentsRequestDTO dto) {
         var userOpt = userRepo.findById(dto.getUserId());
         if (userOpt.isEmpty()) return buildError("User not found", HttpStatus.NOT_FOUND);
 
@@ -86,10 +87,9 @@ public class PaymentServiceImpl implements PaymentService {
                     .createdDate(LocalDateTime.now())
                     .build();
 
-            pay = paymentRepo.save(pay);
+
             pay.setStatus(PaymentStatus.SUCCESS);
             pay = paymentRepo.save(pay);
-
             return buildSuccess("Payment successful", HttpStatus.CREATED, toDto(pay));
         } catch (IllegalArgumentException e) {
             return buildError("Invalid transaction type", HttpStatus.BAD_REQUEST);
@@ -203,8 +203,13 @@ public class PaymentServiceImpl implements PaymentService {
                 Sort.by(Sort.Direction.DESC, "createdDate")
         );
 
-        // 6) Execute query
-        Page<Payment> page = paymentRepo.findAll(spec, pageable);
+        Page<Payment> page = null;
+        if(user.getRole().equals(UserRole.ADMIN)){
+            page =    paymentRepo.findAll(pageable);
+        }else{
+            // 6) Execute query
+            page = paymentRepo.findAll(spec, pageable);
+        }
 
         // 7) Convert to DTOs
         List<PaymentResponseDto> dtos = page.getContent().stream()

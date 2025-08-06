@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/pay")
-public class Controller {
+public class ProcessPaymentController {
 
     @Autowired
     private PaymentFactory paymentFactory;
@@ -25,7 +25,7 @@ public class Controller {
      * @return
      */
     @PostMapping
-    public ResponseEntity<Object> makePayment(HttpServletRequest request, @RequestBody InternalPaymentsRequestDTO dto) {
+    public ResponseEntity<Object> processPayment(HttpServletRequest request, @RequestBody InternalPaymentsRequestDTO dto) {
         //based on transaction type get payment implementation
         PaymentsProcessor processor = paymentFactory.getPaymentMethodType(dto.getTransactionType());
         //call the specific payment

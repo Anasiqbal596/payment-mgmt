@@ -1,0 +1,1647 @@
+Subject: [PATCH] creates payments-system
+---
+Index: pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/pom.xml b/pom.xml
+--- a/pom.xml	(revision 4b043d092bb875049d3f246c28ca70be7782ce64)
++++ b/pom.xml	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
+@@ -1,62 +1,122 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
++<project xmlns="http://maven.apache.org/POM/4.0.0"
++		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
++
+ 	<modelVersion>4.0.0</modelVersion>
++
+ 	<parent>
+ 		<groupId>org.springframework.boot</groupId>
+ 		<artifactId>spring-boot-starter-parent</artifactId>
+ 		<version>3.5.4</version>
+ 		<relativePath/> <!-- lookup parent from repository -->
+ 	</parent>
++
+ 	<groupId>com.practice</groupId>
+ 	<artifactId>demopractice</artifactId>
+ 	<version>0.0.1-SNAPSHOT</version>
+ 	<name>demopractice</name>
+ 	<description>Demo project for Spring Boot</description>
+-	<url/>
+-	<licenses>
+-		<license/>
+-	</licenses>
+-	<developers>
+-		<developer/>
+-	</developers>
+-	<scm>
+-		<connection/>
+-		<developerConnection/>
+-		<tag/>
+-		<url/>
+-	</scm>
++
+ 	<properties>
+ 		<java.version>17</java.version>
+ 	</properties>
++
+ 	<dependencies>
++		<!-- Core Spring Boot -->
+ 		<dependency>
+ 			<groupId>org.springframework.boot</groupId>
+ 			<artifactId>spring-boot-starter</artifactId>
+ 		</dependency>
++
++		<!-- Web -->
+ 		<dependency>
+-			<groupId>jakarta.servlet</groupId>
+-			<artifactId>jakarta.servlet-api</artifactId>
+-			<version>6.0.0</version>
+-			<scope>provided</scope>
++			<groupId>org.springframework.boot</groupId>
++			<artifactId>spring-boot-starter-web</artifactId>
+ 		</dependency>
+ 
++		<!-- Spring Security -->
+ 		<dependency>
+ 			<groupId>org.springframework.boot</groupId>
+-			<artifactId>spring-boot-starter-web</artifactId>
++			<artifactId>spring-boot-starter-security</artifactId>
+ 		</dependency>
+ 
++		<!-- Spring Data JPA -->
+ 		<dependency>
+ 			<groupId>org.springframework.boot</groupId>
+-			<artifactId>spring-boot-starter-test</artifactId>
+-			<scope>test</scope>
++			<artifactId>spring-boot-starter-data-jpa</artifactId>
++		</dependency>
++
++		<!-- MySQL Connector -->
++		<dependency>
++			<groupId>com.mysql</groupId>
++			<artifactId>mysql-connector-j</artifactId>
++			<scope>runtime</scope>
++		</dependency>
++
++
++		<!-- JJWT Implementation -->
++		<dependency>
++			<groupId>io.jsonwebtoken</groupId>
++			<artifactId>jjwt-impl</artifactId>
++			<version>0.11.5</version>
++			<scope>runtime</scope>
++		</dependency>
++
++		<!-- JJWT Jackson Support -->
++		<dependency>
++			<groupId>io.jsonwebtoken</groupId>
++			<artifactId>jjwt-jackson</artifactId>
++			<version>0.11.5</version>
++			<scope>runtime</scope>
++		</dependency>
++
++		<dependency>
++			<groupId>io.jsonwebtoken</groupId>
++			<artifactId>jjwt-api</artifactId>
++			<version>0.11.5</version>
++		</dependency>
++		<dependency>
++			<groupId>io.jsonwebtoken</groupId>
++			<artifactId>jjwt-impl</artifactId>
++			<version>0.11.5</version>
++			<scope>runtime</scope>
+ 		</dependency>
+ 		<dependency>
++			<groupId>io.jsonwebtoken</groupId>
++			<artifactId>jjwt-jackson</artifactId>
++			<version>0.11.5</version>
++			<scope>runtime</scope>
++		</dependency>
++
++		<dependency>
++			<groupId>io.jsonwebtoken</groupId>
++			<artifactId>jjwt-api</artifactId>
++			<version>0.11.5</version>
++		</dependency>
++
++		<!-- Servlet API (only needed for some filters) -->
++		<dependency>
++			<groupId>jakarta.servlet</groupId>
++			<artifactId>jakarta.servlet-api</artifactId>
++			<version>6.0.0</version>
++			<scope>provided</scope>
++		</dependency>
++
++		<!-- Lombok -->
++		<dependency>
+ 			<groupId>org.projectlombok</groupId>
+ 			<artifactId>lombok</artifactId>
+ 			<version>1.18.34</version>
+ 			<scope>provided</scope>
+ 		</dependency>
++
++		<!-- Testing -->
++		<dependency>
++			<groupId>org.springframework.boot</groupId>
++			<artifactId>spring-boot-starter-test</artifactId>
++			<scope>test</scope>
++		</dependency>
+ 	</dependencies>
+ 
+ 	<build>
+Index: src/main/java/com/practice/demopractice/DemopracticeApplicationMain.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/practice/demopractice/DemopracticeApplicationMain.java b/src/main/java/com/practice/demopractice/DemopracticeApplicationMain.java
+--- a/src/main/java/com/practice/demopractice/DemopracticeApplicationMain.java	(revision 4b043d092bb875049d3f246c28ca70be7782ce64)
++++ b/src/main/java/com/practice/demopractice/DemopracticeApplicationMain.java	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
+@@ -2,9 +2,11 @@
+ 
+ import org.springframework.boot.SpringApplication;
+ import org.springframework.boot.autoconfigure.SpringBootApplication;
++import org.springframework.transaction.annotation.EnableTransactionManagement;
+ 
+ 
+ @SpringBootApplication
++@EnableTransactionManagement
+ public class DemopracticeApplicationMain {
+ 
+ 	public static void main(String[] args) {
+Index: src/main/java/com/practice/demopractice/Repository/PaymentRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/practice/demopractice/Repository/PaymentRepository.java b/src/main/java/com/practice/demopractice/Repository/PaymentRepository.java
+new file mode 100644
+--- /dev/null	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
++++ b/src/main/java/com/practice/demopractice/Repository/PaymentRepository.java	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
+@@ -0,0 +1,7 @@
++package com.practice.demopractice.Repository;
++
++import com.practice.demopractice.entity.Payment;
++import org.springframework.data.jpa.repository.JpaRepository;
++
++public interface PaymentRepository extends JpaRepository<Payment, Long> {
++}
+\ No newline at end of file
+Index: src/main/java/com/practice/demopractice/Repository/UserRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/practice/demopractice/Repository/UserRepository.java b/src/main/java/com/practice/demopractice/Repository/UserRepository.java
+new file mode 100644
+--- /dev/null	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
++++ b/src/main/java/com/practice/demopractice/Repository/UserRepository.java	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
+@@ -0,0 +1,13 @@
++package com.practice.demopractice.Repository;
++
++import com.practice.demopractice.entity.User;
++import org.springframework.data.jpa.repository.JpaRepository;
++
++import java.util.Optional;
++
++
++public interface UserRepository extends JpaRepository<User, Long> {
++    Optional<User> findByUsername(String username);
++}
++
++
+Index: src/main/java/com/practice/demopractice/config/SecurityConfig.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/practice/demopractice/config/SecurityConfig.java b/src/main/java/com/practice/demopractice/config/SecurityConfig.java
+new file mode 100644
+--- /dev/null	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
++++ b/src/main/java/com/practice/demopractice/config/SecurityConfig.java	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
+@@ -0,0 +1,66 @@
++package com.practice.demopractice.config;
++
++import com.practice.demopractice.filter.JwtFilter;
++import com.practice.demopractice.service.impl.CustomUserDetailsService;
++import org.springframework.beans.factory.annotation.Autowired;
++import org.springframework.context.annotation.Bean;
++import org.springframework.context.annotation.Configuration;
++import org.springframework.security.authentication.AuthenticationManager;
++import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
++import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
++import org.springframework.security.config.annotation.web.builders.HttpSecurity;
++import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
++import org.springframework.security.config.http.SessionCreationPolicy;
++import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
++import org.springframework.security.crypto.password.PasswordEncoder;
++import org.springframework.security.web.SecurityFilterChain;
++import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
++
++@Configuration
++@EnableWebSecurity
++public class SecurityConfig {
++
++    private final JwtFilter jwtFilter;
++    private final CustomUserDetailsService userDetailsService;
++
++    @Autowired
++    public SecurityConfig(JwtFilter jwtFilter, CustomUserDetailsService userDetailsService) {
++        this.jwtFilter = jwtFilter;
++        this.userDetailsService = userDetailsService;
++    }
++
++    @Bean
++    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
++        http
++                .csrf(csrf -> csrf.disable())
++                .authorizeHttpRequests(auth -> auth
++                        .requestMatchers("/api/login", "/api/users").permitAll()
++                        .anyRequest().authenticated()
++                )
++                .sessionManagement(sess -> sess
++                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
++                );
++
++        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
++
++        return http.build();
++    }
++
++    @Bean
++    public DaoAuthenticationProvider authenticationProvider() {
++        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
++        authProvider.setUserDetailsService(userDetailsService);
++        authProvider.setPasswordEncoder(passwordEncoder());
++        return authProvider;
++    }
++
++    @Bean
++    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
++        return config.getAuthenticationManager();
++    }
++
++    @Bean
++    public PasswordEncoder passwordEncoder() {
++        return new BCryptPasswordEncoder();
++    }
++}
+\ No newline at end of file
+Index: src/main/java/com/practice/demopractice/controller/AuthController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/practice/demopractice/controller/AuthController.java b/src/main/java/com/practice/demopractice/controller/AuthController.java
+new file mode 100644
+--- /dev/null	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
++++ b/src/main/java/com/practice/demopractice/controller/AuthController.java	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
+@@ -0,0 +1,80 @@
++package com.practice.demopractice.controller;
++
++import com.practice.demopractice.dto.ResponseDTO;
++import com.practice.demopractice.dto.UserRequestDTO;
++import com.practice.demopractice.util.JwtUtil;
++import org.springframework.beans.factory.annotation.Autowired;
++import org.springframework.http.HttpStatus;
++import org.springframework.http.ResponseEntity;
++import org.springframework.security.authentication.AuthenticationManager;
++import org.springframework.security.authentication.BadCredentialsException;
++import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
++import org.springframework.security.core.Authentication;
++import org.springframework.security.core.userdetails.UserDetails;
++import org.springframework.web.bind.annotation.PostMapping;
++import org.springframework.web.bind.annotation.RequestBody;
++import org.springframework.web.bind.annotation.RequestMapping;
++import org.springframework.web.bind.annotation.RestController;
++
++import java.util.Map;
++
++@RestController
++@RequestMapping("/api")
++public class AuthController {
++
++    @Autowired
++     AuthenticationManager authenticationManager;
++
++    @Autowired
++     JwtUtil jwtUtil;
++
++    @Autowired
++    public AuthController(AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
++        this.authenticationManager = authenticationManager;
++        this.jwtUtil = jwtUtil;
++    }
++
++    @PostMapping("/login")
++    public ResponseEntity<?> login(@RequestBody UserRequestDTO dto) {
++        System.out.println("Login attempt for: " + dto.getUsername());
++
++        try {
++            Authentication auth = authenticationManager.authenticate(
++                    new UsernamePasswordAuthenticationToken(dto.getUsername(), dto.getPassword())
++            );
++
++            System.out.println("Authentication successful: " + auth.getName());
++
++            // Generate token after successful authentication
++            String token = jwtUtil.generateToken(dto.getUsername());
++
++            return ResponseEntity.ok(ResponseDTO.builder()
++                    .status("success")
++                    .statusCode(200)
++                    .message("Login successful")
++                    .data(Map.of("token", token))
++                    .build());
++
++        } catch (BadCredentialsException e) {
++            System.err.println("BAD CREDENTIALS: " + dto.getUsername());
++            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
++                    ResponseDTO.builder()
++                            .status("error")
++                            .statusCode(401)
++                            .message("Invalid credentials")
++                            .build()
++            );
++        } catch (Exception e) {
++            System.err.println("LOGIN ERROR: " + e.getMessage());
++            e.printStackTrace();
++            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(
++                    ResponseDTO.builder()
++                            .status("error")
++                            .statusCode(403)
++                            .message("Access denied: " + e.getMessage())
++                            .build()
++            );
++        }
++    }
++
++}
+\ No newline at end of file
+Index: src/main/java/com/practice/demopractice/controller/Controller.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/practice/demopractice/controller/Controller.java b/src/main/java/com/practice/demopractice/controller/Controller.java
+--- a/src/main/java/com/practice/demopractice/controller/Controller.java	(revision 4b043d092bb875049d3f246c28ca70be7782ce64)
++++ b/src/main/java/com/practice/demopractice/controller/Controller.java	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
+@@ -2,7 +2,6 @@
+ 
+ import com.practice.demopractice.dto.InternalPaymentsRequestDTO;
+ import com.practice.demopractice.factory.PaymentFactory;
+-import com.practice.demopractice.service.PaymentServiceImpl;
+ import com.practice.demopractice.service.PaymentsProcessor;
+ import jakarta.servlet.http.HttpServletRequest;
+ import org.springframework.beans.factory.annotation.Autowired;
+Index: src/main/java/com/practice/demopractice/controller/PaymentController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/practice/demopractice/controller/PaymentController.java b/src/main/java/com/practice/demopractice/controller/PaymentController.java
+new file mode 100644
+--- /dev/null	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
++++ b/src/main/java/com/practice/demopractice/controller/PaymentController.java	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
+@@ -0,0 +1,58 @@
++package com.practice.demopractice.controller;
++
++import com.practice.demopractice.dto.InternalPaymentsRequestDTO;
++import com.practice.demopractice.dto.PaymentRequestDto;
++import com.practice.demopractice.dto.ResponseDTO;
++import com.practice.demopractice.service.PaymentService;
++import lombok.RequiredArgsConstructor;
++import org.springframework.beans.factory.annotation.Autowired;
++import org.springframework.http.ResponseEntity;
++import org.springframework.web.bind.annotation.*;
++
++import java.util.List;
++
++@RestController
++@RequestMapping("/api/payments")
++@RequiredArgsConstructor
++public class PaymentController {
++
++    @Autowired
++    PaymentService paymentService;
++
++    // Create payment
++    @PostMapping
++    public ResponseEntity<ResponseDTO> makePayment(@RequestBody InternalPaymentsRequestDTO dto) {
++        ResponseDTO response = paymentService.makePayment(dto);
++        return ResponseEntity.status(response.getStatusCode()).body(response);
++    }
++
++    // Get all payments
++    @GetMapping
++    public ResponseEntity<ResponseDTO> getAllPayments() {
++        ResponseDTO response = paymentService.getAllPayments();
++        return ResponseEntity.status(response.getStatusCode()).body(response);
++    }
++
++    // Get single payment by ID
++    @GetMapping("/{id}")
++    public ResponseEntity<ResponseDTO> getPaymentById(@PathVariable String id) {
++        ResponseDTO response = paymentService.getPaymentById(id);
++        return ResponseEntity.status(response.getStatusCode()).body(response);
++    }
++
++    // Update payment
++    @PutMapping("/{id}")
++    public ResponseEntity<ResponseDTO> updatePayment(
++            @PathVariable String id,
++            @RequestBody InternalPaymentsRequestDTO dto) {
++        ResponseDTO response = paymentService.updatePayment(id, dto);
++        return ResponseEntity.status(response.getStatusCode()).body(response);
++    }
++
++    // Delete payment
++    @DeleteMapping("/{id}")
++    public ResponseEntity<ResponseDTO> deletePayment(@PathVariable String id) {
++        ResponseDTO response = paymentService.deletePayment(id);
++        return ResponseEntity.status(response.getStatusCode()).body(response);
++    }
++}
+\ No newline at end of file
+Index: src/main/java/com/practice/demopractice/controller/ResponseDtoController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/practice/demopractice/controller/ResponseDtoController.java b/src/main/java/com/practice/demopractice/controller/ResponseDtoController.java
+new file mode 100644
+--- /dev/null	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
++++ b/src/main/java/com/practice/demopractice/controller/ResponseDtoController.java	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
+@@ -0,0 +1,4 @@
++package com.practice.demopractice.controller;
++
++public class ResponseDtoController {
++}
+Index: src/main/java/com/practice/demopractice/controller/UserController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/practice/demopractice/controller/UserController.java b/src/main/java/com/practice/demopractice/controller/UserController.java
+new file mode 100644
+--- /dev/null	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
++++ b/src/main/java/com/practice/demopractice/controller/UserController.java	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
+@@ -0,0 +1,48 @@
++package com.practice.demopractice.controller;
++
++import com.practice.demopractice.dto.ResponseDTO;
++import com.practice.demopractice.dto.UserRequestDTO;
++import com.practice.demopractice.service.UserService;
++import org.springframework.beans.factory.annotation.Autowired;
++import org.springframework.http.ResponseEntity;
++import org.springframework.web.bind.annotation.*;
++
++@RestController
++@RequestMapping("/api/users")
++public class UserController {
++
++    @Autowired
++    private UserService userService;
++
++    @PostMapping
++    public ResponseEntity<ResponseDTO> createUser(@RequestBody UserRequestDTO dto) {
++        ResponseDTO response = userService.createUser(dto);
++        return ResponseEntity.status(response.getStatusCode()).body(response);
++    }
++
++    @GetMapping
++    public ResponseEntity<ResponseDTO> getAllUsers() {
++        ResponseDTO response = userService.getAllUsers();
++        return ResponseEntity.status(response.getStatusCode()).body(response);
++    }
++
++    @GetMapping("/{id}")
++    public ResponseEntity<ResponseDTO> getUserById(@PathVariable Long id) {
++        ResponseDTO response = userService.getUserById(id);
++        return ResponseEntity.status(response.getStatusCode()).body(response);
++    }
++
++    @PutMapping("/{id}")
++    public ResponseEntity<ResponseDTO> updateUser(
++            @PathVariable Long id,
++            @RequestBody UserRequestDTO dto) {
++        ResponseDTO response = userService.updateUser(id, dto);
++        return ResponseEntity.status(response.getStatusCode()).body(response);
++    }
++
++    @DeleteMapping("/{id}")
++    public ResponseEntity<ResponseDTO> deleteUser(@PathVariable Long id) {
++        ResponseDTO response = userService.deleteUser(id);
++        return ResponseEntity.status(response.getStatusCode()).body(response);
++    }
++}
+\ No newline at end of file
+Index: src/main/java/com/practice/demopractice/dto/InternalPaymentsRequestDTO.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/practice/demopractice/dto/InternalPaymentsRequestDTO.java b/src/main/java/com/practice/demopractice/dto/InternalPaymentsRequestDTO.java
+--- a/src/main/java/com/practice/demopractice/dto/InternalPaymentsRequestDTO.java	(revision 4b043d092bb875049d3f246c28ca70be7782ce64)
++++ b/src/main/java/com/practice/demopractice/dto/InternalPaymentsRequestDTO.java	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
+@@ -1,36 +1,16 @@
+ package com.practice.demopractice.dto;
+ 
++import lombok.Data;
++
++import java.math.BigDecimal;
++
++@Data
+ public class InternalPaymentsRequestDTO {
+ 
+-
+-
+-    private String amount;
++    private Long userId;
++    private BigDecimal amount;
+     private int fee;
+     private String transactionType;
+-    private String userName;
+-
+-    public String getTransactionType() {
+-        return transactionType;
+-    }
+-
+-    public void setTransactionType(String transactionType) {
+-        this.transactionType = transactionType;
+-    }
+-
+-    public String getAmount() {
+-        return amount;
+-    }
+-
+-    public void setAmount(String amount) {
+-        this.amount = amount;
+-    }
+-
+-    public int getFee() {
+-        return fee;
+-    }
+-
+-    public void setFee(int fee) {
+-        this.fee = fee;
+-    }
++    private String status;
+ }
+ 
+Index: src/main/java/com/practice/demopractice/dto/PaymentRequestDto.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/practice/demopractice/dto/PaymentRequestDto.java b/src/main/java/com/practice/demopractice/dto/PaymentRequestDto.java
+new file mode 100644
+--- /dev/null	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
++++ b/src/main/java/com/practice/demopractice/dto/PaymentRequestDto.java	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
+@@ -0,0 +1,21 @@
++package com.practice.demopractice.dto;
++
++import lombok.Builder;
++import lombok.Data;
++
++import java.math.BigDecimal;
++
++
++import java.time.LocalDateTime;
++
++@Data
++@Builder
++public class PaymentRequestDto {
++    private Long id;
++    private Long userId;
++    private BigDecimal amount;
++    private int fee;
++    private String transactionType;
++    private String status;
++    private LocalDateTime createdDate;
++}
+Index: src/main/java/com/practice/demopractice/dto/ResponseDTO.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/practice/demopractice/dto/ResponseDTO.java b/src/main/java/com/practice/demopractice/dto/ResponseDTO.java
+new file mode 100644
+--- /dev/null	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
++++ b/src/main/java/com/practice/demopractice/dto/ResponseDTO.java	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
+@@ -0,0 +1,20 @@
++package com.practice.demopractice.dto;
++
++
++import com.fasterxml.jackson.annotation.JsonInclude;
++import lombok.*;
++
++@JsonInclude(JsonInclude.Include.NON_NULL)
++@Getter
++@Setter
++@ToString
++@Builder
++@NoArgsConstructor
++@AllArgsConstructor
++public class ResponseDTO {
++    private String status;
++    private Integer statusCode;
++    private Object data;
++    private String message;
++    private Object pageData;
++}
+Index: src/main/java/com/practice/demopractice/dto/UserRequestDTO.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/practice/demopractice/dto/UserRequestDTO.java b/src/main/java/com/practice/demopractice/dto/UserRequestDTO.java
+new file mode 100644
+--- /dev/null	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
++++ b/src/main/java/com/practice/demopractice/dto/UserRequestDTO.java	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
+@@ -0,0 +1,16 @@
++package com.practice.demopractice.dto;
++
++import lombok.AllArgsConstructor;
++import lombok.Builder;
++import lombok.Data;
++import lombok.NoArgsConstructor;
++
++@Data
++@Builder
++@NoArgsConstructor
++@AllArgsConstructor
++public class UserRequestDTO {
++    private String username;
++    private String password;
++    private String role; // Should be "ADMIN" or "USER"
++}
+Index: src/main/java/com/practice/demopractice/entity/Payment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/practice/demopractice/entity/Payment.java b/src/main/java/com/practice/demopractice/entity/Payment.java
+new file mode 100644
+--- /dev/null	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
++++ b/src/main/java/com/practice/demopractice/entity/Payment.java	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
+@@ -0,0 +1,41 @@
++package com.practice.demopractice.entity;
++
++import com.practice.demopractice.enums.PaymentStatus;
++import com.practice.demopractice.enums.TransactionType;
++import jakarta.persistence.*;
++import lombok.AllArgsConstructor;
++import lombok.Builder;
++import lombok.Data;
++import lombok.NoArgsConstructor;
++
++import java.math.BigDecimal;
++import java.time.LocalDateTime;
++@Entity
++@Table(name = "payments")
++@Data
++@NoArgsConstructor
++@AllArgsConstructor
++@Builder
++public class Payment {
++
++    @Id
++    @GeneratedValue(strategy = GenerationType.IDENTITY)
++    private Long id;
++
++    private BigDecimal amount;
++    private int fee;
++
++    @Enumerated(EnumType.STRING)
++    private TransactionType transactionType;
++
++    @ManyToOne(fetch = FetchType.LAZY)
++    @JoinColumn(name = "user_id")
++    private User user;
++
++    private LocalDateTime createdDate;
++
++    @Enumerated(EnumType.STRING)
++    @Column(nullable = false)
++    private PaymentStatus status;
++
++}
+Index: src/main/java/com/practice/demopractice/entity/User.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/practice/demopractice/entity/User.java b/src/main/java/com/practice/demopractice/entity/User.java
+new file mode 100644
+--- /dev/null	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
++++ b/src/main/java/com/practice/demopractice/entity/User.java	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
+@@ -0,0 +1,38 @@
++package com.practice.demopractice.entity;
++
++
++import com.practice.demopractice.enums.TransactionType;
++import com.practice.demopractice.enums.UserRole;
++import jakarta.persistence.*;
++import lombok.AllArgsConstructor;
++import lombok.Builder;
++import lombok.Data;
++import lombok.NoArgsConstructor;
++import org.springframework.stereotype.Component;
++
++
++@Data // Marks this class as a JPA entity (i.e., a table)
++@Table(name = "users") // Optional: sets the table name in the DB
++@NoArgsConstructor // Generates no-args constructor (required by JPA)
++@AllArgsConstructor // Generates constructor with all fields
++@Component
++@Entity
++@Builder
++public class User {
++    @Id
++    @GeneratedValue(strategy = GenerationType.IDENTITY)
++    private Long id;
++
++    @Column(nullable = false, unique = true)
++    private String username;
++
++    @Column(nullable = false)
++    private String password;
++
++    @Enumerated(EnumType.STRING)
++    @Column(nullable = false)
++    private UserRole role;
++
++
++
++}
+Index: src/main/java/com/practice/demopractice/enums/PaymentStatus.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/practice/demopractice/enums/PaymentStatus.java b/src/main/java/com/practice/demopractice/enums/PaymentStatus.java
+new file mode 100644
+--- /dev/null	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
++++ b/src/main/java/com/practice/demopractice/enums/PaymentStatus.java	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
+@@ -0,0 +1,7 @@
++package com.practice.demopractice.enums;
++
++public enum PaymentStatus {
++    PENDING,
++    SUCCESS,
++    FAILED
++}
+Index: src/main/java/com/practice/demopractice/enums/TransactionType.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/practice/demopractice/enums/TransactionType.java b/src/main/java/com/practice/demopractice/enums/TransactionType.java
+--- a/src/main/java/com/practice/demopractice/enums/TransactionType.java	(revision 4b043d092bb875049d3f246c28ca70be7782ce64)
++++ b/src/main/java/com/practice/demopractice/enums/TransactionType.java	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
+@@ -1,8 +1,9 @@
+ package com.practice.demopractice.enums;
+ 
+ public enum TransactionType {
+-
+-
+-      WALLET,REMITANCE,PEER,DOMESTIC,INTERNATIONAL;
+-
++      WALLET,
++      REMITANCE,
++      PEER,
++      DOMESTIC,
++      INTERNATIONAL
+ }
+\ No newline at end of file
+Index: src/main/java/com/practice/demopractice/enums/UserRole.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/practice/demopractice/enums/UserRole.java b/src/main/java/com/practice/demopractice/enums/UserRole.java
+new file mode 100644
+--- /dev/null	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
++++ b/src/main/java/com/practice/demopractice/enums/UserRole.java	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
+@@ -0,0 +1,6 @@
++package com.practice.demopractice.enums;
++
++public enum UserRole {
++
++    ADMIN, USER;
++}
+Index: src/main/java/com/practice/demopractice/filter/JwtFilter.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/practice/demopractice/filter/JwtFilter.java b/src/main/java/com/practice/demopractice/filter/JwtFilter.java
+new file mode 100644
+--- /dev/null	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
++++ b/src/main/java/com/practice/demopractice/filter/JwtFilter.java	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
+@@ -0,0 +1,70 @@
++package com.practice.demopractice.filter;
++
++import com.practice.demopractice.service.impl.CustomUserDetailsService;
++import com.practice.demopractice.util.JwtUtil;
++import jakarta.servlet.FilterChain;
++import jakarta.servlet.ServletException;
++import jakarta.servlet.http.HttpServletRequest;
++import jakarta.servlet.http.HttpServletResponse;
++import org.springframework.beans.factory.annotation.Autowired;
++import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
++import org.springframework.security.core.context.SecurityContextHolder;
++import org.springframework.security.core.userdetails.UserDetails;
++import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
++import org.springframework.stereotype.Component;
++import org.springframework.web.filter.OncePerRequestFilter;
++
++import java.io.IOException;
++
++@Component
++public class JwtFilter extends OncePerRequestFilter {
++
++    private final JwtUtil jwtUtil;
++    private final CustomUserDetailsService userDetailsService;
++
++    @Autowired
++    public JwtFilter(JwtUtil jwtUtil, CustomUserDetailsService userDetailsService) {
++        this.jwtUtil = jwtUtil;
++        this.userDetailsService = userDetailsService;
++    }
++
++    @Override
++    protected void doFilterInternal(HttpServletRequest request,
++                                    HttpServletResponse response,
++                                    FilterChain filterChain) throws ServletException, IOException {
++
++        String path = request.getServletPath();
++        if (path.equals("/api/login") || path.equals("/api/users")) {
++            filterChain.doFilter(request, response);
++            return;
++        }
++
++        String header = request.getHeader("Authorization");
++        if (header != null && header.startsWith("Bearer ")) {
++            String token = header.substring(7);
++            try {
++                if (jwtUtil.validateToken(token)) {
++                    String username = jwtUtil.extractUsername(token);
++
++                    UserDetails userDetails = userDetailsService.loadUserByUsername(username);
++
++                    UsernamePasswordAuthenticationToken authToken =
++                            new UsernamePasswordAuthenticationToken(
++                                    userDetails,
++                                    null,
++                                    userDetails.getAuthorities()
++                            );
++
++                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
++                    SecurityContextHolder.getContext().setAuthentication(authToken);
++                }
++            } catch (Exception e) {
++                // Token validation failed
++                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
++                return;
++            }
++        }
++
++        filterChain.doFilter(request, response);
++    }
++}
+\ No newline at end of file
+Index: src/main/java/com/practice/demopractice/service/AuthService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/practice/demopractice/service/AuthService.java b/src/main/java/com/practice/demopractice/service/AuthService.java
+new file mode 100644
+--- /dev/null	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
++++ b/src/main/java/com/practice/demopractice/service/AuthService.java	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
+@@ -0,0 +1,4 @@
++package com.practice.demopractice.service;
++
++public class AuthService {
++}
+Index: src/main/java/com/practice/demopractice/service/impl/DomesticPaymentClass.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/practice/demopractice/service/impl/DomesticPaymentClass.java b/src/main/java/com/practice/demopractice/service/DomesticPaymentClass.java
+rename from src/main/java/com/practice/demopractice/service/impl/DomesticPaymentClass.java
+rename to src/main/java/com/practice/demopractice/service/DomesticPaymentClass.java
+--- a/src/main/java/com/practice/demopractice/service/impl/DomesticPaymentClass.java	(revision 4b043d092bb875049d3f246c28ca70be7782ce64)
++++ b/src/main/java/com/practice/demopractice/service/DomesticPaymentClass.java	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
+@@ -1,10 +1,8 @@
+-package com.practice.demopractice.service.impl;
++package com.practice.demopractice.service;
+ 
+ import com.practice.demopractice.dto.InternalPaymentsRequestDTO;
+ import com.practice.demopractice.enums.TransactionType;
+-import com.practice.demopractice.service.PaymentsProcessor;
+ import jakarta.servlet.http.HttpServletRequest;
+-import org.springframework.beans.factory.annotation.Qualifier;
+ import org.springframework.http.ResponseEntity;
+ import org.springframework.stereotype.Service;
+ 
+Index: src/main/java/com/practice/demopractice/service/impl/InternationalPayment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/practice/demopractice/service/impl/InternationalPayment.java b/src/main/java/com/practice/demopractice/service/InternationalPayment.java
+rename from src/main/java/com/practice/demopractice/service/impl/InternationalPayment.java
+rename to src/main/java/com/practice/demopractice/service/InternationalPayment.java
+--- a/src/main/java/com/practice/demopractice/service/impl/InternationalPayment.java	(revision 4b043d092bb875049d3f246c28ca70be7782ce64)
++++ b/src/main/java/com/practice/demopractice/service/InternationalPayment.java	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
+@@ -1,10 +1,8 @@
+-package com.practice.demopractice.service.impl;
++package com.practice.demopractice.service;
+ 
+ import com.practice.demopractice.dto.InternalPaymentsRequestDTO;
+ import com.practice.demopractice.enums.TransactionType;
+-import com.practice.demopractice.service.PaymentsProcessor;
+ import jakarta.servlet.http.HttpServletRequest;
+-import lombok.extern.slf4j.Slf4j;
+ import org.springframework.http.HttpStatus;
+ import org.springframework.http.ResponseEntity;
+ import org.springframework.stereotype.Service;
+Index: src/main/java/com/practice/demopractice/service/PaymentService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/practice/demopractice/service/PaymentService.java b/src/main/java/com/practice/demopractice/service/PaymentService.java
+new file mode 100644
+--- /dev/null	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
++++ b/src/main/java/com/practice/demopractice/service/PaymentService.java	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
+@@ -0,0 +1,15 @@
++package com.practice.demopractice.service;
++
++import com.practice.demopractice.dto.InternalPaymentsRequestDTO;
++import com.practice.demopractice.dto.ResponseDTO;
++import org.springframework.stereotype.Service;
++
++@Service
++public interface PaymentService {
++    ResponseDTO makePayment(InternalPaymentsRequestDTO dto);
++
++    ResponseDTO getAllPayments();
++    ResponseDTO getPaymentById(String id);
++    ResponseDTO updatePayment(String id, InternalPaymentsRequestDTO dto);
++    ResponseDTO deletePayment(String id);
++}
+Index: src/main/java/com/practice/demopractice/service/impl/PeerToPeer.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/practice/demopractice/service/impl/PeerToPeer.java b/src/main/java/com/practice/demopractice/service/PeerToPeer.java
+rename from src/main/java/com/practice/demopractice/service/impl/PeerToPeer.java
+rename to src/main/java/com/practice/demopractice/service/PeerToPeer.java
+--- a/src/main/java/com/practice/demopractice/service/impl/PeerToPeer.java	(revision 4b043d092bb875049d3f246c28ca70be7782ce64)
++++ b/src/main/java/com/practice/demopractice/service/PeerToPeer.java	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
+@@ -1,10 +1,8 @@
+-package com.practice.demopractice.service.impl;
++package com.practice.demopractice.service;
+ 
+ import com.practice.demopractice.dto.InternalPaymentsRequestDTO;
+ import com.practice.demopractice.enums.TransactionType;
+-import com.practice.demopractice.service.PaymentsProcessor;
+ import jakarta.servlet.http.HttpServletRequest;
+-import lombok.extern.slf4j.Slf4j;
+ import org.springframework.http.HttpStatus;
+ import org.springframework.http.ResponseEntity;
+ import org.springframework.stereotype.Service;
+Index: src/main/java/com/practice/demopractice/service/UserService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/practice/demopractice/service/UserService.java b/src/main/java/com/practice/demopractice/service/UserService.java
+new file mode 100644
+--- /dev/null	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
++++ b/src/main/java/com/practice/demopractice/service/UserService.java	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
+@@ -0,0 +1,14 @@
++package com.practice.demopractice.service;
++
++import com.practice.demopractice.dto.ResponseDTO;
++import com.practice.demopractice.dto.UserRequestDTO;
++
++import java.util.List;
++
++public interface UserService {
++    ResponseDTO createUser(UserRequestDTO dto);
++    ResponseDTO getAllUsers();
++    ResponseDTO getUserById(Long id);
++    ResponseDTO updateUser(Long id, UserRequestDTO dto);
++    ResponseDTO deleteUser(Long id);
++}
+\ No newline at end of file
+Index: src/main/java/com/practice/demopractice/service/impl/WalletPayment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/practice/demopractice/service/impl/WalletPayment.java b/src/main/java/com/practice/demopractice/service/WalletPayment.java
+rename from src/main/java/com/practice/demopractice/service/impl/WalletPayment.java
+rename to src/main/java/com/practice/demopractice/service/WalletPayment.java
+--- a/src/main/java/com/practice/demopractice/service/impl/WalletPayment.java	(revision 4b043d092bb875049d3f246c28ca70be7782ce64)
++++ b/src/main/java/com/practice/demopractice/service/WalletPayment.java	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
+@@ -1,10 +1,8 @@
+-package com.practice.demopractice.service.impl;
++package com.practice.demopractice.service;
+ 
+ import com.practice.demopractice.dto.InternalPaymentsRequestDTO;
+ import com.practice.demopractice.enums.TransactionType;
+-import com.practice.demopractice.service.PaymentsProcessor;
+ import jakarta.servlet.http.HttpServletRequest;
+-import org.springframework.beans.factory.annotation.Qualifier;
+ import org.springframework.http.ResponseEntity;
+ import org.springframework.stereotype.Service;
+ 
+Index: src/main/java/com/practice/demopractice/service/impl/CustomUserDetailsService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/practice/demopractice/service/impl/CustomUserDetailsService.java b/src/main/java/com/practice/demopractice/service/impl/CustomUserDetailsService.java
+new file mode 100644
+--- /dev/null	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
++++ b/src/main/java/com/practice/demopractice/service/impl/CustomUserDetailsService.java	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
+@@ -0,0 +1,48 @@
++package com.practice.demopractice.service.impl;
++
++import com.practice.demopractice.Repository.UserRepository;
++import com.practice.demopractice.entity.User;
++import org.springframework.beans.factory.annotation.Autowired;
++import org.springframework.security.core.GrantedAuthority;
++import org.springframework.security.core.authority.SimpleGrantedAuthority;
++import org.springframework.security.core.userdetails.UserDetails;
++import org.springframework.security.core.userdetails.UserDetailsService;
++import org.springframework.security.core.userdetails.UsernameNotFoundException;
++import org.springframework.stereotype.Service;
++
++import java.util.Collection;
++import java.util.Collections;
++
++@Service
++public class CustomUserDetailsService implements UserDetailsService {
++
++    private final UserRepository userRepo;
++
++    @Autowired
++    public CustomUserDetailsService(UserRepository userRepo) {
++        this.userRepo = userRepo;
++    }
++
++    @Override
++    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
++        System.out.println("Loading user: " + username);
++        User user = userRepo.findByUsername(username)
++                .orElseThrow(() -> {
++                    System.err.println("USER NOT FOUND: " + username);
++                    return new UsernameNotFoundException("User not found");
++                });
++
++        System.out.println("User found: " + user.getUsername());
++        return new org.springframework.security.core.userdetails.User(
++                user.getUsername(),
++                user.getPassword(),
++                Collections.singleton(new SimpleGrantedAuthority("ROLE_" + user.getRole()))
++        );
++    }
++
++    private Collection<? extends GrantedAuthority> getAuthorities(User user) {
++        return Collections.singletonList(
++                new SimpleGrantedAuthority("ROLE_" + user.getRole().name())
++        );
++    }
++}
+\ No newline at end of file
+Index: src/main/java/com/practice/demopractice/service/impl/PaymentServiceImpl.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/practice/demopractice/service/impl/PaymentServiceImpl.java b/src/main/java/com/practice/demopractice/service/impl/PaymentServiceImpl.java
+new file mode 100644
+--- /dev/null	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
++++ b/src/main/java/com/practice/demopractice/service/impl/PaymentServiceImpl.java	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
+@@ -0,0 +1,160 @@
++package com.practice.demopractice.service.impl;
++
++import com.practice.demopractice.Repository.PaymentRepository;
++import com.practice.demopractice.Repository.UserRepository;
++import com.practice.demopractice.dto.InternalPaymentsRequestDTO;
++import com.practice.demopractice.dto.ResponseDTO;
++import com.practice.demopractice.entity.Payment;
++import com.practice.demopractice.entity.User;
++import com.practice.demopractice.enums.PaymentStatus;
++import com.practice.demopractice.enums.TransactionType;
++import com.practice.demopractice.service.PaymentService;
++import jakarta.transaction.Transactional;
++import org.springframework.beans.factory.annotation.Autowired;
++import org.springframework.http.HttpStatus;
++import org.springframework.stereotype.Service;
++
++import java.time.LocalDateTime;
++import java.util.HashMap;
++import java.util.List;
++import java.util.Map;
++import java.util.Optional;
++import java.util.stream.Collectors;
++
++@Service
++public class PaymentServiceImpl implements PaymentService {
++
++    @Autowired
++    UserRepository userRepo;
++    @Autowired
++    PaymentRepository paymentRepo;
++
++    @Autowired
++    public PaymentServiceImpl(UserRepository userRepo, PaymentRepository paymentRepo) {
++        this.userRepo = userRepo;
++        this.paymentRepo = paymentRepo;
++    }
++
++    @Override
++    @Transactional
++    public ResponseDTO makePayment(InternalPaymentsRequestDTO dto) {
++        Optional<User> userOptional = userRepo.findById(dto.getUserId());
++        if (userOptional.isEmpty()) {
++            return ResponseDTO.builder().status("error").statusCode(HttpStatus.NOT_FOUND.value()).message("User not found with ID: " + dto.getUserId()).build();
++        }
++        User user = userOptional.get();
++
++        try {
++            TransactionType transactionType = TransactionType.valueOf(dto.getTransactionType().toUpperCase());
++
++            Payment payment = Payment.builder().user(user).amount(dto.getAmount()).fee(dto.getFee()).transactionType(transactionType).createdDate(LocalDateTime.now()).status(PaymentStatus.PENDING).build();
++
++            payment = paymentRepo.save(payment);
++
++            // Simulate payment processing
++            payment.setStatus(PaymentStatus.SUCCESS);
++            payment = paymentRepo.save(payment);
++
++            return ResponseDTO.builder().status("success").statusCode(HttpStatus.CREATED.value()).data(convertPaymentToMap(payment)).message("Payment processed successfully").build();
++
++        } catch (IllegalArgumentException e) {
++            return ResponseDTO.builder().status("error").statusCode(HttpStatus.BAD_REQUEST.value()).message("Invalid transaction type: " + dto.getTransactionType()).build();
++        }
++    }
++
++    @Override
++    public ResponseDTO getAllPayments() {
++        List<Payment> payments = paymentRepo.findAll();
++        if (payments.isEmpty()) {
++            return ResponseDTO.builder().status("success").statusCode(HttpStatus.OK.value()).message("No payments found").build();
++        }
++
++        List<Map<String, Object>> paymentList = payments.stream().map(this::convertPaymentToMap).collect(Collectors.toList());
++
++        return ResponseDTO.builder().status("success").statusCode(HttpStatus.OK.value()).data(paymentList).message("Found " + paymentList.size() + " payments").build();
++    }
++
++    @Override
++    public ResponseDTO getPaymentById(String id) {
++        try {
++            Long paymentId = Long.parseLong(id);
++            Optional<Payment> paymentOptional = paymentRepo.findById(paymentId);
++
++            if (paymentOptional.isEmpty()) {
++                return ResponseDTO.builder().status("error").statusCode(HttpStatus.NOT_FOUND.value()).message("Payment not found with ID: " + id).build();
++            }
++
++            return ResponseDTO.builder().status("success").statusCode(HttpStatus.OK.value()).data(convertPaymentToMap(paymentOptional.get())).message("Payment retrieved successfully").build();
++
++        } catch (NumberFormatException e) {
++            return ResponseDTO.builder().status("error").statusCode(HttpStatus.BAD_REQUEST.value()).message("Invalid payment ID format").build();
++        }
++    }
++
++    @Override
++    @Transactional
++    public ResponseDTO updatePayment(String id, InternalPaymentsRequestDTO dto) {
++        try {
++            Long paymentId = Long.parseLong(id);
++            Optional<Payment> paymentOptional = paymentRepo.findById(paymentId);
++
++            if (paymentOptional.isEmpty()) {
++                return ResponseDTO.builder().status("error").statusCode(HttpStatus.NOT_FOUND.value()).message("Payment not found with ID: " + id).build();
++            }
++
++            Payment payment = paymentOptional.get();
++
++            try {
++                // Update payment fields
++                payment.setAmount(dto.getAmount());
++                payment.setFee(dto.getFee());
++                payment.setTransactionType(TransactionType.valueOf(dto.getTransactionType().toUpperCase()));
++
++                if (dto.getStatus() != null && !dto.getStatus().isEmpty()) {
++                    payment.setStatus(PaymentStatus.valueOf(dto.getStatus().toUpperCase()));
++                }
++
++                payment = paymentRepo.save(payment);
++
++                return ResponseDTO.builder().status("success").statusCode(HttpStatus.OK.value()).data(convertPaymentToMap(payment)).message("Payment updated successfully").build();
++
++            } catch (IllegalArgumentException e) {
++                return ResponseDTO.builder().status("error").statusCode(HttpStatus.BAD_REQUEST.value()).message("Invalid enum value: " + e.getMessage()).build();
++            }
++
++        } catch (NumberFormatException e) {
++            return ResponseDTO.builder().status("error").statusCode(HttpStatus.BAD_REQUEST.value()).message("Invalid payment ID format").build();
++        }
++    }
++
++    @Override
++    @Transactional
++    public ResponseDTO deletePayment(String id) {
++        try {
++            Long paymentId = Long.parseLong(id);
++
++            if (!paymentRepo.existsById(paymentId)) {
++                return ResponseDTO.builder().status("error").statusCode(HttpStatus.NOT_FOUND.value()).message("Payment not found with ID: " + id).build();
++            }
++
++            paymentRepo.deleteById(paymentId);
++
++            return ResponseDTO.builder().status("success").statusCode(HttpStatus.OK.value()).message("Payment deleted successfully").build();
++
++        } catch (NumberFormatException e) {
++            return ResponseDTO.builder().status("error").statusCode(HttpStatus.BAD_REQUEST.value()).message("Invalid payment ID format").build();
++        }
++    }
++
++    private Map<String, Object> convertPaymentToMap(Payment payment) {
++        Map<String, Object> paymentMap = new HashMap<>();
++        paymentMap.put("id", payment.getId());
++        paymentMap.put("userId", payment.getUser().getId());
++        paymentMap.put("amount", payment.getAmount());
++        paymentMap.put("fee", payment.getFee());
++        paymentMap.put("transactionType", payment.getTransactionType().name());
++        paymentMap.put("status", payment.getStatus().name());
++        paymentMap.put("createdDate", payment.getCreatedDate());
++        return paymentMap;
++    }
++}
+\ No newline at end of file
+Index: src/main/java/com/practice/demopractice/service/impl/UserServiceImpl.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/practice/demopractice/service/impl/UserServiceImpl.java b/src/main/java/com/practice/demopractice/service/impl/UserServiceImpl.java
+new file mode 100644
+--- /dev/null	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
++++ b/src/main/java/com/practice/demopractice/service/impl/UserServiceImpl.java	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
+@@ -0,0 +1,190 @@
++package com.practice.demopractice.service.impl;
++
++import com.practice.demopractice.Repository.UserRepository;
++import com.practice.demopractice.dto.ResponseDTO;
++import com.practice.demopractice.dto.UserRequestDTO;
++import com.practice.demopractice.entity.User;
++import com.practice.demopractice.enums.UserRole;
++import com.practice.demopractice.service.UserService;
++import org.springframework.beans.factory.annotation.Autowired;
++import org.springframework.security.crypto.password.PasswordEncoder;
++import org.springframework.stereotype.Service;
++
++import java.util.HashMap;
++import java.util.List;
++import java.util.Map;
++import java.util.Optional;
++import java.util.stream.Collectors;
++
++@Service
++public class UserServiceImpl implements UserService {
++
++    @Autowired
++    private UserRepository userRepo;
++
++    @Autowired
++    private PasswordEncoder passwordEncoder;
++
++    @Override
++    public ResponseDTO createUser(UserRequestDTO dto) {
++        if (userRepo.findByUsername(dto.getUsername()).isPresent()) {
++            return ResponseDTO.builder()
++                    .status("fail")
++                    .statusCode(400)
++                    .message("Username already exists")
++                    .build();
++        }
++
++        try {
++            UserRole role = UserRole.valueOf(dto.getRole().toUpperCase());
++
++            User user = User.builder()
++                    .username(dto.getUsername())
++                    .password(passwordEncoder.encode(dto.getPassword()))
++                    .role(role)
++                    .build();
++
++            User savedUser = userRepo.save(user);
++
++            return ResponseDTO.builder()
++                    .status("success")
++                    .statusCode(201)
++                    .message("User created successfully")
++                    .data(convertUserToMap(savedUser))
++                    .build();
++
++        } catch (IllegalArgumentException e) {
++            return ResponseDTO.builder()
++                    .status("fail")
++                    .statusCode(400)
++                    .message("Invalid role specified. Must be ADMIN or USER")
++                    .build();
++        }
++    }
++
++    @Override
++    public ResponseDTO getAllUsers() {
++        List<User> users = userRepo.findAll();
++
++        if (users.isEmpty()) {
++            return ResponseDTO.builder()
++                    .status("success")
++                    .statusCode(200)
++                    .message("No users found")
++                    .build();
++        }
++
++        List<Map<String, Object>> userList = users.stream()
++                .map(this::convertUserToMap)
++                .collect(Collectors.toList());
++
++        return ResponseDTO.builder()
++                .status("success")
++                .statusCode(200)
++                .data(userList)
++                .message("Users retrieved successfully")
++                .build();
++    }
++
++    @Override
++    public ResponseDTO getUserById(Long id) {
++        Optional<User> userOptional = userRepo.findById(id);
++
++        if (userOptional.isEmpty()) {
++            return ResponseDTO.builder()
++                    .status("fail")
++                    .statusCode(404)
++                    .message("User not found with id: " + id)
++                    .build();
++        }
++
++        return ResponseDTO.builder()
++                .status("success")
++                .statusCode(200)
++                .data(convertUserToMap(userOptional.get()))
++                .message("User retrieved successfully")
++                .build();
++    }
++
++    @Override
++    public ResponseDTO updateUser(Long id, UserRequestDTO dto) {
++        Optional<User> userOptional = userRepo.findById(id);
++
++        if (userOptional.isEmpty()) {
++            return ResponseDTO.builder()
++                    .status("fail")
++                    .statusCode(404)
++                    .message("User not found with id: " + id)
++                    .build();
++        }
++
++        User user = userOptional.get();
++
++        // Username update check
++        if (dto.getUsername() != null && !dto.getUsername().isEmpty()) {
++            if (userRepo.findByUsername(dto.getUsername()).isPresent() &&
++                    !user.getUsername().equals(dto.getUsername())) {
++                return ResponseDTO.builder()
++                        .status("fail")
++                        .statusCode(400)
++                        .message("Username already exists")
++                        .build();
++            }
++            user.setUsername(dto.getUsername());
++        }
++
++        // Password update
++        if (dto.getPassword() != null && !dto.getPassword().isEmpty()) {
++            user.setPassword(passwordEncoder.encode(dto.getPassword()));
++        }
++
++        // Role update with validation
++        if (dto.getRole() != null && !dto.getRole().isEmpty()) {
++            try {
++                user.setRole(UserRole.valueOf(dto.getRole().toUpperCase()));
++            } catch (IllegalArgumentException e) {
++                return ResponseDTO.builder()
++                        .status("fail")
++                        .statusCode(400)
++                        .message("Invalid role specified")
++                        .build();
++            }
++        }
++
++        User updatedUser = userRepo.save(user);
++
++        return ResponseDTO.builder()
++                .status("success")
++                .statusCode(200)
++                .data(convertUserToMap(updatedUser))
++                .message("User updated successfully")
++                .build();
++    }
++
++    @Override
++    public ResponseDTO deleteUser(Long id) {
++        if (!userRepo.existsById(id)) {
++            return ResponseDTO.builder()
++                    .status("fail")
++                    .statusCode(404)
++                    .message("User not found with id: " + id)
++                    .build();
++        }
++
++        userRepo.deleteById(id);
++
++        return ResponseDTO.builder()
++                .status("success")
++                .statusCode(200)
++                .message("User deleted successfully")
++                .build();
++    }
++
++    private Map<String, Object> convertUserToMap(User user) {
++        Map<String, Object> userMap = new HashMap<>();
++        userMap.put("id", user.getId());
++        userMap.put("username", user.getUsername());
++        userMap.put("role", user.getRole().name());
++        return userMap;
++    }
++}
+\ No newline at end of file
+Index: src/main/java/com/practice/demopractice/util/JwtUtil.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/practice/demopractice/util/JwtUtil.java b/src/main/java/com/practice/demopractice/util/JwtUtil.java
+new file mode 100644
+--- /dev/null	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
++++ b/src/main/java/com/practice/demopractice/util/JwtUtil.java	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
+@@ -0,0 +1,75 @@
++package com.practice.demopractice.util;
++
++import io.jsonwebtoken.Claims;
++import io.jsonwebtoken.Jwts;
++import io.jsonwebtoken.SignatureAlgorithm;
++import io.jsonwebtoken.io.Decoders;
++import io.jsonwebtoken.security.Keys;
++import org.springframework.beans.factory.annotation.Value;
++import org.springframework.stereotype.Component;
++
++import java.security.Key;
++import java.util.Date;
++import java.util.HashMap;
++import java.util.Map;
++import java.util.function.Function;
++
++@Component
++public class JwtUtil {
++
++    @Value("${jwt.secret}")
++    private String secret;
++
++    @Value("${jwt.expiration}")
++    private Long expiration;
++
++    private Key getSigningKey() {
++        byte[] keyBytes = Decoders.BASE64.decode(secret);
++        return Keys.hmacShaKeyFor(keyBytes);
++    }
++
++    public String generateToken(String username) {
++        Map<String, Object> claims = new HashMap<>();
++        return createToken(claims, username);
++    }
++
++    private String createToken(Map<String, Object> claims, String subject) {
++        return Jwts.builder()
++                .setClaims(claims)
++                .setSubject(subject)
++                .setIssuedAt(new Date(System.currentTimeMillis()))
++                .setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
++                // Fixed: Add SignatureAlgorithm parameter
++                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
++                .compact();
++    }
++
++    public boolean validateToken(String token) {
++        try {
++            Jwts.parserBuilder()
++                    .setSigningKey(getSigningKey())
++                    .build()
++                    .parseClaimsJws(token);
++            return true;
++        } catch (Exception e) {
++            return false;
++        }
++    }
++
++    public String extractUsername(String token) {
++        return extractClaim(token, Claims::getSubject);
++    }
++
++    private <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
++        final Claims claims = extractAllClaims(token);
++        return claimsResolver.apply(claims);
++    }
++
++    private Claims extractAllClaims(String token) {
++        return Jwts.parserBuilder()
++                .setSigningKey(getSigningKey())
++                .build()
++                .parseClaimsJws(token)
++                .getBody();
++    }
++}
+\ No newline at end of file
+Index: src/main/resources/application.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/src/main/resources/application.properties b/src/main/resources/application.properties
+--- a/src/main/resources/application.properties	(revision 4b043d092bb875049d3f246c28ca70be7782ce64)
++++ b/src/main/resources/application.properties	(revision 23bad6513708da8c957d92d16032f18908d59a0b)
+@@ -1,1 +1,16 @@
+ spring.application.name=demopractice
++
++# MySQL database connection
++spring.datasource.url=jdbc:mysql://localhost:3306/payment_mgmt
++spring.datasource.username=root
++spring.datasource.password=1234
++spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
++
++# JPA/Hibernate settings
++spring.jpa.hibernate.ddl-auto=update
++spring.jpa.show-sql=true
++spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
++
++# Generate with: openssl rand -base64 32
++jwt.secret=zS3qXeR9tLwYfV2nDc1gBh5jKp0o7iUv6mNl4G8yHrAqWxTdZ+
++jwt.expiration=86400
+Index: src/main/java/com/practice/demopractice/service/PaymentServiceImpl.java
+===================================================================
+diff --git a/src/main/java/com/practice/demopractice/service/PaymentServiceImpl.java b/src/main/java/com/practice/demopractice/service/PaymentServiceImpl.java
+deleted file mode 100644
+--- a/src/main/java/com/practice/demopractice/service/PaymentServiceImpl.java	(revision 4b043d092bb875049d3f246c28ca70be7782ce64)
++++ /dev/null	(revision 4b043d092bb875049d3f246c28ca70be7782ce64)
+@@ -1,27 +0,0 @@
+-package com.practice.demopractice.service;
+-
+-import com.practice.demopractice.dto.InternalPaymentsRequestDTO;
+-import jakarta.servlet.http.HttpServletRequest;
+-import org.springframework.beans.factory.annotation.Autowired;
+-import org.springframework.beans.factory.annotation.Qualifier;
+-import org.springframework.http.ResponseEntity;
+-import org.springframework.stereotype.Service;
+-
+-import java.util.Map;
+-
+-@Service
+-public class PaymentServiceImpl {
+-
+-    @Autowired
+-    private Map<String, PaymentsProcessor> paymentsProcessorMap;
+-
+-    public ResponseEntity<Object> makePayment(String paymentType, HttpServletRequest request, InternalPaymentsRequestDTO requestBody) {
+-        PaymentsProcessor processor = paymentsProcessorMap.get(paymentType);
+-
+-        if (processor == null) {
+-            return ResponseEntity.badRequest().body("Invalid payment type: " + paymentType);
+-        }
+-
+-        return processor.processPayment(request, requestBody);
+-    }
+-}
+\ No newline at end of file

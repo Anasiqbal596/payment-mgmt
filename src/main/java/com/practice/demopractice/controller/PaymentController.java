@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 
-import static com.practice.demopractice.util.APIPaths.MY_HISTORY;
+import static com.practice.demopractice.util.APIPaths.ALL_HISTORY;
 
 @RestController
 @RequestMapping("/api/payments")
@@ -25,8 +25,8 @@ public class PaymentController {
     private final PaymentService paymentService;
 
     @PostMapping
-    public ResponseEntity<ResponseDTO> makePayment(@RequestBody InternalPaymentsRequestDTO dto) {
-        var res = paymentService.makePayment(dto);
+    public ResponseEntity<ResponseDTO> createPaymentRequest(@RequestBody InternalPaymentsRequestDTO dto) {
+        var res = paymentService.createPaymentRequest(dto);
         return ResponseEntity.status(res.getStatusCode()).body(res);
     }
 
@@ -56,32 +56,35 @@ public class PaymentController {
         return ResponseEntity.status(res.getStatusCode()).body(res);
     }
 
-    @GetMapping(MY_HISTORY)
+    @GetMapping(ALL_HISTORY)
     public ResponseEntity<ResponseDTO> history(
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
             @RequestParam(required = false) TransactionType transactionType,
             @RequestParam(required = false) PaymentStatus status,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
-            @AuthenticationPrincipal UserDetails userDetails) {
+            @RequestParam(defaultValue = "5") int size,
+            @AuthenticationPrincipal UserDetails userDetails)// used for fetch latest  transaction
+    {
 
-        if (startDate != null && endDate != null && startDate.isAfter(endDate)) {
+        if (startDate != null && endDate != null && startDate.isAfter(endDate))
+        {
             return ResponseEntity.badRequest()
                     .body(ResponseDTO.builder()
                             .status("error").statusCode(400)
-                            .message("Start must be before end").build());
+                            .message("Start must be before end data").build());
         }
+        // Using var:
+        //var req = new PaymentHistoryRequest();  In Java (from version 10 onward), var is just a shorthand for declaring a local variable with type inference.
+        PaymentHistoryRequest paymentHistoryRequest = new PaymentHistoryRequest();
+        paymentHistoryRequest.setStartDate(startDate);
+        paymentHistoryRequest.setEndDate(endDate);
+        paymentHistoryRequest.setTransactionType(transactionType);
+        paymentHistoryRequest.setStatus(status);
+        paymentHistoryRequest.setPage(page);
+        paymentHistoryRequest.setSize(size);
 
-        var req = new PaymentHistoryRequest();
-        req.setStartDate(startDate);
-        req.setEndDate(endDate);
-        req.setTransactionType(transactionType);
-        req.setStatus(status);
-        req.setPage(page);
-        req.setSize(size);
-
-        var res = paymentService.getPaymentHistory(req);
+        ResponseDTO res = paymentService.getPaymentHistory(paymentHistoryRequest);
         return ResponseEntity.status(res.getStatusCode()).body(res);
     }
 }
