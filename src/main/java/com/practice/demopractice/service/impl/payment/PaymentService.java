@@ -1,12 +1,7 @@
-package com.practice.demopractice.service;
+package com.practice.demopractice.service.impl.payment;
 
 import com.practice.demopractice.dto.*;
-import com.practice.demopractice.entity.Payment;
-import com.practice.demopractice.entity.User;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
 
 @Service
 public interface PaymentService {

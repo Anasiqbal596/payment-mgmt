@@ -1,4 +1,4 @@
-package com.practice.demopractice.service.impl;
+package com.practice.demopractice.service.impl.payment;
 
 import com.practice.demopractice.Repository.PaymentRepository;
 import com.practice.demopractice.Repository.UserRepository;
@@ -8,7 +8,6 @@ import com.practice.demopractice.entity.User;
 import com.practice.demopractice.enums.PaymentStatus;
 import com.practice.demopractice.enums.TransactionType;
 import com.practice.demopractice.enums.UserRole;
-import com.practice.demopractice.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
@@ -24,6 +23,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static com.practice.demopractice.util.ApplicationConstant.ResponseCode.FAIL;
+import static com.practice.demopractice.util.ApplicationConstant.ResponseCode.SUCCESS;
+
 @Service
 public class PaymentServiceImpl implements PaymentService {
 
@@ -38,7 +40,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     private ResponseDTO buildSuccess(String message, HttpStatus status, Object data) {
         return ResponseDTO.builder()
-                .status("success")
+                .status(SUCCESS)
                 .statusCode(status.value())
                 .message(message)
                 .data(data)
@@ -47,7 +49,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     private ResponseDTO buildError(String message, HttpStatus status) {
         return ResponseDTO.builder()
-                .status("error")
+                .status(FAIL)
                 .statusCode(status.value())
                 .message(message)
                 .build();

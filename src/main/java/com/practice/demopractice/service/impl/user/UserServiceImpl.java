@@ -1,11 +1,10 @@
-package com.practice.demopractice.service.impl;
+package com.practice.demopractice.service.impl.user;
 
 import com.practice.demopractice.Repository.UserRepository;
 import com.practice.demopractice.dto.ResponseDTO;
 import com.practice.demopractice.dto.UserRequestDTO;
 import com.practice.demopractice.entity.User;
 import com.practice.demopractice.enums.UserRole;
-import com.practice.demopractice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

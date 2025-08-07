@@ -1,4 +1,4 @@
-package com.practice.demopractice.service;
+package com.practice.demopractice.service.impl.process.payment;
 
 import com.practice.demopractice.dto.InternalPaymentsRequestDTO;
 import com.practice.demopractice.enums.TransactionType;

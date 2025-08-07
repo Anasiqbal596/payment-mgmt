@@ -1,4 +1,4 @@
-package com.practice.demopractice.util;
+package com.practice.demopractice.jwt.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

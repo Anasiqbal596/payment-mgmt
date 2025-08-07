@@ -1,21 +1,22 @@
-package com.practice.demopractice.service;
+package com.practice.demopractice.service.impl.process.payment;
 
 import com.practice.demopractice.dto.InternalPaymentsRequestDTO;
 import com.practice.demopractice.enums.TransactionType;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-@Service
-public class InternationalPayment implements PaymentsProcessor {
-
+@Service  // Registered as Spring Bean
+//@Qualifier("Domestic")
+//@Primary
+public class DomesticPaymentClass implements PaymentsProcessor {
     @Override
     public ResponseEntity<Object> processPayment(HttpServletRequest request, InternalPaymentsRequestDTO requestBody) {
-        return new ResponseEntity<>("InternationalPayment Implementation", HttpStatus.OK);
+        return ResponseEntity.ok("Processed Domestic Payment");
     }
 
+    @Override
     public TransactionType getType() {
-        return TransactionType.INTERNATIONAL;
+        return TransactionType.DOMESTIC; // Or whatever enum constant is correct
     }
 }

@@ -1,8 +1,8 @@
-package com.practice.demopractice.controller;
+package com.practice.demopractice.jwt.controller;
 
 import com.practice.demopractice.dto.ResponseDTO;
 import com.practice.demopractice.dto.UserRequestDTO;
-import com.practice.demopractice.util.JwtUtil;
+import com.practice.demopractice.jwt.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +10,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

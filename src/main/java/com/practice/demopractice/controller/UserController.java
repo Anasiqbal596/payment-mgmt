@@ -2,7 +2,7 @@ package com.practice.demopractice.controller;
 
 import com.practice.demopractice.dto.ResponseDTO;
 import com.practice.demopractice.dto.UserRequestDTO;
-import com.practice.demopractice.service.UserService;
+import com.practice.demopractice.service.impl.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

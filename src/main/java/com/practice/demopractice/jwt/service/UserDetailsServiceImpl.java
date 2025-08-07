@@ -1,4 +1,4 @@
-package com.practice.demopractice.service.impl;
+package com.practice.demopractice.jwt.service;
 
 import com.practice.demopractice.Repository.UserRepository;
 import com.practice.demopractice.entity.User;
@@ -14,12 +14,12 @@ import java.util.Collection;
 import java.util.Collections;
 
 @Service
-public class CustomUserDetailsService implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final UserRepository userRepo;
 
     @Autowired
-    public CustomUserDetailsService(UserRepository userRepo) {
+    public UserDetailsServiceImpl(UserRepository userRepo) {
         this.userRepo = userRepo;
     }
 

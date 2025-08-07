@@ -1,9 +1,7 @@
-package com.practice.demopractice.service;
+package com.practice.demopractice.service.impl.user;
 
 import com.practice.demopractice.dto.ResponseDTO;
 import com.practice.demopractice.dto.UserRequestDTO;
-
-import java.util.List;
 
 public interface UserService {
 

@@ -5,7 +5,7 @@ import com.practice.demopractice.dto.PaymentHistoryRequest;
 import com.practice.demopractice.dto.ResponseDTO;
 import com.practice.demopractice.enums.PaymentStatus;
 import com.practice.demopractice.enums.TransactionType;
-import com.practice.demopractice.service.PaymentService;
+import com.practice.demopractice.service.impl.payment.PaymentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -15,14 +15,16 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 
-import static com.practice.demopractice.util.APIPaths.ALL_HISTORY;
+import static com.practice.demopractice.util.ApplicationConstant.APIPaths.ALL_HISTORY;
+
 
 @RestController
 @RequestMapping("/api/payments")
 @RequiredArgsConstructor
 public class PaymentController {
 
-    private final PaymentService paymentService;
+    private final PaymentService paymentService;//TODO,FixME
+
 
     @PostMapping
     public ResponseEntity<ResponseDTO> createPaymentRequest(@RequestBody InternalPaymentsRequestDTO dto) {
@@ -87,4 +89,8 @@ public class PaymentController {
         ResponseDTO res = paymentService.getPaymentHistory(paymentHistoryRequest);
         return ResponseEntity.status(res.getStatusCode()).body(res);
     }
+
+
+
+
 }

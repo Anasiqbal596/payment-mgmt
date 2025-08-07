@@ -1,7 +1,7 @@
-package com.practice.demopractice.filter;
+package com.practice.demopractice.jwt.filter;
 
-import com.practice.demopractice.service.impl.CustomUserDetailsService;
-import com.practice.demopractice.util.JwtUtil;
+import com.practice.demopractice.jwt.service.UserDetailsServiceImpl;
+import com.practice.demopractice.jwt.util.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,10 +22,10 @@ public class JwtFilter extends OncePerRequestFilter {
     @Autowired
     JwtUtil jwtUtil;
     @Autowired
-    CustomUserDetailsService userDetailsService;
+    UserDetailsServiceImpl userDetailsService;
 
     @Autowired
-    public JwtFilter(JwtUtil jwtUtil, CustomUserDetailsService userDetailsService) {
+    public JwtFilter(JwtUtil jwtUtil, UserDetailsServiceImpl userDetailsService) {
         this.jwtUtil = jwtUtil;
         this.userDetailsService = userDetailsService;
     }
@@ -36,7 +36,7 @@ public class JwtFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
 
         String path = request.getServletPath();
-        if (path.equals("/api/login") || path.equals("/api/users")) {
+        if (path.equals("/api/login") || path.equals("/api/users") ) {
             filterChain.doFilter(request, response);
             return;
         }

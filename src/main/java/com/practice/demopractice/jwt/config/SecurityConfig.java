@@ -1,7 +1,7 @@
-package com.practice.demopractice.config;
+package com.practice.demopractice.jwt.config;
 
-import com.practice.demopractice.filter.JwtFilter;
-import com.practice.demopractice.service.impl.CustomUserDetailsService;
+import com.practice.demopractice.jwt.filter.JwtFilter;
+import com.practice.demopractice.jwt.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,10 +21,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final JwtFilter jwtFilter;
-    private final CustomUserDetailsService userDetailsService;
+    private final UserDetailsServiceImpl userDetailsService;
 
     @Autowired
-    public SecurityConfig(JwtFilter jwtFilter, CustomUserDetailsService userDetailsService) {
+    public SecurityConfig(JwtFilter jwtFilter, UserDetailsServiceImpl userDetailsService) {
         this.jwtFilter = jwtFilter;
         this.userDetailsService = userDetailsService;
     }
@@ -34,7 +34,8 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/login", "/api/users", "/api/payments").permitAll()
+                        .requestMatchers("/**").permitAll()
+//                        .requestMatchers("/api/login", "/api/users", "/api/payments").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess

@@ -6,6 +6,5 @@ public enum TransactionType {
       PEER,
       DOMESTIC,
       INTERNATIONAL,
-      CREDIT,  // Received payment
-      DEBIT    // Sent payment
+
 }
