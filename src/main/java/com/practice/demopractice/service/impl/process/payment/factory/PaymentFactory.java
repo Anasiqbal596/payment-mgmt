@@ -9,41 +9,54 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.practice.demopractice.enums.TransactionType.*;
+import static org.springframework.data.util.TypeUtils.type;
+
 @Component
 public class PaymentFactory {
 
+        @Autowired
+        DomesticPaymentClass domesticPaymentClass;
+        @Autowired
+        InternationalPayment internationalPayment;
+        @Autowired
+        PeerToPeer peerToPeer;
+        @Autowired
+        WalletPayment walletPayment;
 
-    private final Map<TransactionType, PaymentsProcessor> strategyMap = new HashMap<>();
+//    private final Map<TransactionType, PaymentsProcessor> strategyMap = new HashMap<>();
 
-    public PaymentFactory(List<PaymentsProcessor> processorList) {
-        for (PaymentsProcessor processor : processorList) {
-            strategyMap.put(processor.getType(), processor);
-        }
-    }
+//    public PaymentFactory(List<PaymentsProcessor> processorList) {
+//        for (PaymentsProcessor processor : processorList) {
+//            strategyMap.put(processor.getType(), processor);
+//
+//        }
+//    }
 
-    public PaymentsProcessor getPaymentMethodType(String transactionTypeStr) {
-        TransactionType type =null;
+
+    public PaymentsProcessor getPaymentMethodType(TransactionType transactionType) {
+
         try {
-            type = TransactionType.valueOf(transactionTypeStr.toUpperCase());
-            if(type){
-                return strategyMap.get(type);
+            TransactionType type =valueOf(transactionType.name().toUpperCase());
+            if(type.equals(WALLET)){
+                return walletPayment;
             }
-            else if (type.equals(peerToPeer)) {
-                return strategyMap.get(type);
-            } else if (type.equals(internationalPayment)) {
-                return strategyMap.get(type);
-            }else if (type.equals(walletPayment))
+            else if (type.equals(PEER)) {
+                return peerToPeer;
+            } else if (type.equals(DOMESTIC)) {
+                return domesticPaymentClass;
+            }else if (type.equals(INTERNATIONAL))
             {
-                return strategyMap.get(type);
+                return internationalPayment;
             }
         }catch (IllegalArgumentException e){
                 e.printStackTrace();
-                return strategyMap.get(type);
+
         }
         catch (Exception e){
             e.printStackTrace();
         }
 
-        return strategyMap.get(type);
+        return null;
     }
 }

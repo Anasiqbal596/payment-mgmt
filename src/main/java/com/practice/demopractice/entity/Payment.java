@@ -23,7 +23,7 @@ public class Payment {
     private Long id;
 
     private BigDecimal amount;
-    private int fee;
+    private BigDecimal fee;
 
     @Enumerated(EnumType.STRING)
     private TransactionType transactionType;
@@ -41,4 +41,6 @@ public class Payment {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private PaymentStatus status;
+
+    private BigDecimal updatedAmount;
 }

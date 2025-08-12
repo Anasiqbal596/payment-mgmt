@@ -13,7 +13,9 @@ import java.time.LocalDateTime;
 public class PaymentResponseDto {
     private Long id;
     private BigDecimal amount;
-    private int fee;
+    private BigDecimal fee;            // use BigDecimal for money
+    private BigDecimal updatedAmount;
+    //private int fee;
     private TransactionType transactionType;
     private Long payerId;
     private Long recipientId;

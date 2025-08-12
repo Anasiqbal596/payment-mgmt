@@ -8,6 +8,8 @@ import com.practice.demopractice.entity.User;
 import com.practice.demopractice.enums.PaymentStatus;
 import com.practice.demopractice.enums.TransactionType;
 import com.practice.demopractice.enums.UserRole;
+import com.practice.demopractice.service.impl.process.payment.PaymentValidation;
+import com.practice.demopractice.service.impl.process.payment.PaymentsProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
@@ -15,12 +17,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional; // Fixed import
+import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.practice.demopractice.util.ApplicationConstant.ResponseCode.FAIL;
@@ -32,10 +34,24 @@ public class PaymentServiceImpl implements PaymentService {
     private final UserRepository userRepo;
     private final PaymentRepository paymentRepo;
 
+    // map from TransactionType -> PaymentsProcessor (built from injected list)
+    private final Map<TransactionType, PaymentsProcessor> processorMap = new EnumMap<>(TransactionType.class);
+
     @Autowired
-    public PaymentServiceImpl(UserRepository userRepo, PaymentRepository paymentRepo) {
+    public PaymentServiceImpl(UserRepository userRepo,
+                              PaymentRepository paymentRepo,
+                              List<PaymentsProcessor> processors) {
         this.userRepo = userRepo;
         this.paymentRepo = paymentRepo;
+
+        // build map from enum to processor
+        if (processors != null) {
+            for (PaymentsProcessor p : processors) {
+                if (p != null && p.getType() != null) {
+                    this.processorMap.put(p.getType(), p);
+                }
+            }
+        }
     }
 
     private ResponseDTO buildSuccess(String message, HttpStatus status, Object data) {
@@ -61,8 +77,8 @@ public class PaymentServiceImpl implements PaymentService {
                 .amount(payment.getAmount())
                 .fee(payment.getFee())
                 .transactionType(payment.getTransactionType())
-                .payerId(payment.getUser().getId())
-                .recipientId(payment.getRecipient().getId())
+                .payerId(payment.getUser() != null ? payment.getUser().getId() : null)
+                .recipientId(payment.getRecipient() != null ? payment.getRecipient().getId() : null)
                 .createdDate(payment.getCreatedDate())
                 .status(payment.getStatus())
                 .build();
@@ -83,12 +99,11 @@ public class PaymentServiceImpl implements PaymentService {
                     .user(userOpt.get())
                     .recipient(recOpt.get())
                     .amount(dto.getAmount())
-                    .fee(dto.getFee())
+                    .fee(BigDecimal.valueOf(dto.getFee()))
                     .transactionType(tx)
                     .status(PaymentStatus.PENDING)
                     .createdDate(LocalDateTime.now())
                     .build();
-
 
             pay.setStatus(PaymentStatus.SUCCESS);
             pay = paymentRepo.save(pay);
@@ -128,7 +143,7 @@ public class PaymentServiceImpl implements PaymentService {
 
             var p = opt.get();
             p.setAmount(dto.getAmount());
-            p.setFee(dto.getFee());
+            p.setFee(BigDecimal.valueOf(dto.getFee()));
             p.setTransactionType(TransactionType.valueOf(dto.getTransactionType().toUpperCase()));
             if (dto.getStatus() != null) p.setStatus(PaymentStatus.valueOf(dto.getStatus().toUpperCase()));
             if (dto.getRecipientId() != null) {
@@ -158,16 +173,12 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    @Transactional(readOnly = true) // Now using Spring's Transactional
+    @Transactional(readOnly = true)
     public ResponseDTO getPaymentHistory(PaymentHistoryRequest req) {
         // 1) Load authenticated user
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepo.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-
-        // DEBUG: Print authenticated user info
-        System.out.println("Authenticated User ID: " + user.getId());
-        System.out.println("Authenticated Username: " + username);
 
         // 2) Build specification to get payments where user is either payer OR recipient
         Specification<Payment> spec = (root, query, cb) ->
@@ -190,12 +201,10 @@ public class PaymentServiceImpl implements PaymentService {
 
         // 4) Apply other filters
         if (req.getTransactionType() != null) {
-            spec = spec.and((root, query, cb) ->
-                    cb.equal(root.get("transactionType"), req.getTransactionType()));
+            spec = spec.and((root, query, cb) -> cb.equal(root.get("transactionType"), req.getTransactionType()));
         }
         if (req.getStatus() != null) {
-            spec = spec.and((root, query, cb) ->
-                    cb.equal(root.get("status"), req.getStatus()));
+            spec = spec.and((root, query, cb) -> cb.equal(root.get("status"), req.getStatus()));
         }
 
         // 5) Create page request with sorting
@@ -205,11 +214,10 @@ public class PaymentServiceImpl implements PaymentService {
                 Sort.by(Sort.Direction.DESC, "createdDate")
         );
 
-        Page<Payment> page = null;
-        if(user.getRole().equals(UserRole.ADMIN)){
-            page =    paymentRepo.findAll(pageable);
-        }else{
-            // 6) Execute query
+        Page<Payment> page;
+        if (user.getRole().equals(UserRole.ADMIN)) {
+            page = paymentRepo.findAll(pageable);
+        } else {
             page = paymentRepo.findAll(spec, pageable);
         }
 
