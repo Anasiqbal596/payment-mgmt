@@ -16,12 +16,12 @@ import java.math.BigDecimal;
 public class PaymentValidationImpl implements PaymentValidation, PaymentsProcessor {
 
     private final FeeConfig feeConfig;
-    private final TransactionType type;
+   // private final TransactionType type;
 
     // Constructor injection with type specified
     public PaymentValidationImpl(FeeConfig feeConfig) {
         this.feeConfig = feeConfig;
-        this.type = TransactionType.WALLET;
+       // this.type = TransactionType.WALLET;
     }
 
     @Override
@@ -49,10 +49,10 @@ public class PaymentValidationImpl implements PaymentValidation, PaymentsProcess
 
     }
 
-    @Override
-    public TransactionType getType() {
-        return this.type;
-    }
+//    @Override
+//    public TransactionType getType() {
+//        return this.type;
+//    }
 
     @Override
     public ResponseEntity<Object> processPayment(HttpServletRequest request, InternalPaymentsRequestDTO dto) {
@@ -61,5 +61,10 @@ public class PaymentValidationImpl implements PaymentValidation, PaymentsProcess
 
         // Process logic (this is just a placeholder — put your real logic here)
         return ResponseEntity.ok("Payment of type " + dto.getTransactionType() + " processed successfully.");
+    }
+
+    @Override
+    public TransactionType getType() {
+        return null;
     }
 }
