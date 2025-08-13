@@ -8,6 +8,7 @@ import com.practice.demopractice.entity.User;
 import com.practice.demopractice.enums.PaymentStatus;
 import com.practice.demopractice.enums.TransactionType;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +16,9 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 
+@Slf4j
 @Service
-public class WalletPayment implements PaymentsProcessor,PaymentValidation {
+public class WalletPayment implements PaymentsProcessor, PaymentValidation {
 
     private final PaymentRepository paymentRepository;
     private final FeeConfig feeConfig;
@@ -28,65 +30,86 @@ public class WalletPayment implements PaymentsProcessor,PaymentValidation {
 
     @Override
     public ResponseEntity<Object> processPayment(HttpServletRequest request, InternalPaymentsRequestDTO requestBody) {
-        // Validation
-        validateFee(requestBody);
+        log.info("Starting Wallet payment processing for UserId: {}, RecipientId: {}, Amount: {}",
+                requestBody.getUserId(), requestBody.getRecipientId(), requestBody.getAmount());
 
-        // Fee calculation
-        BigDecimal feeRate = feeConfig.getDomestic(); // e.g., 0.05 means 0.05%
-        BigDecimal fee = requestBody.getAmount()
-                .multiply(feeRate.divide(BigDecimal.valueOf(100), 6, RoundingMode.HALF_UP))
-                .setScale(6, RoundingMode.HALF_UP);
+        try {
+            // Validation
+            validateFee(requestBody);
 
-        BigDecimal updatedAmount = requestBody.getAmount()
-                .subtract(fee)
-                .setScale(6, RoundingMode.HALF_UP);
+            // Fee calculation
+            BigDecimal feeRate = feeConfig.getDomestic(); // Could be feeConfig.getWallet() if configured separately
+            log.debug("Using fee rate: {}", feeRate);
 
-        // Create payment object
-        Payment payment = new Payment();
-        payment.setAmount(requestBody.getAmount());
-        payment.setFee(fee);
-        payment.setUpdatedAmount(updatedAmount);
-        payment.setTransactionType(TransactionType.DOMESTIC);
-        payment.setStatus(PaymentStatus.SUCCESS);
-        payment.setCreatedDate(LocalDateTime.now());
+            BigDecimal fee = requestBody.getAmount()
+                    .multiply(feeRate.divide(BigDecimal.valueOf(100), 6, RoundingMode.HALF_UP))
+                    .setScale(6, RoundingMode.HALF_UP);
 
-        // Set payer
-        User payer = new User();
-        payer.setId(requestBody.getUserId());
-        payment.setUser(payer);
+            BigDecimal updatedAmount = requestBody.getAmount()
+                    .subtract(fee)
+                    .setScale(6, RoundingMode.HALF_UP);
 
-        // Set recipient
-        User recipient = new User();
-        recipient.setId(requestBody.getRecipientId());
-        payment.setRecipient(recipient);
+            log.debug("Calculated fee: {}, Updated amount after fee: {}", fee, updatedAmount);
 
-        // Save to DB
-        paymentRepository.save(payment);
+            // Create payment object
+            Payment payment = new Payment();
+            payment.setAmount(requestBody.getAmount());
+            payment.setFee(fee);
+            payment.setUpdatedAmount(updatedAmount);
+            payment.setTransactionType(TransactionType.WALLET);
+            payment.setStatus(PaymentStatus.SUCCESS);
+            payment.setCreatedDate(LocalDateTime.now());
 
+            // Set payer
+            User payer = new User();
+            payer.setId(requestBody.getUserId());
+            payment.setUser(payer);
 
-        return ResponseEntity.ok("Processed Wallet Payment"+payment);
+            // Set recipient
+            User recipient = new User();
+            recipient.setId(requestBody.getRecipientId());
+            payment.setRecipient(recipient);
+
+            // Save to DB
+            paymentRepository.save(payment);
+
+            log.info("Wallet payment processed successfully for UserId: {} -> RecipientId: {}",
+                    requestBody.getUserId(), requestBody.getRecipientId());
+            return ResponseEntity.ok("Processed Wallet Payment: " + payment);
+
+        } catch (Exception e) {
+            log.error("Error processing Wallet payment for UserId: {}, Reason: {}",
+                    requestBody.getUserId(), e.getMessage(), e);
+            return ResponseEntity.status(500).body("Payment processing failed: " + e.getMessage());
+        }
     }
 
     @Override
     public TransactionType getType() {
-        return TransactionType.WALLET; // Ensure this matches your enum
+        return TransactionType.WALLET;
     }
-
 
     @Override
     public void validateFee(InternalPaymentsRequestDTO dto) {
+        log.info("Validating Wallet payment request for UserId: {}, Amount: {}", dto.getUserId(), dto.getAmount());
 
         if (dto.getAmount() == null || dto.getAmount().compareTo(BigDecimal.ZERO) <= 0) {
+            log.warn("Validation failed: Invalid amount for UserId: {}", dto.getUserId());
             throw new IllegalArgumentException("Amount must be greater than zero.");
         }
         if (dto.getRecipientId() == null) {
+            log.warn("Validation failed: Missing recipient ID for UserId: {}", dto.getUserId());
             throw new IllegalArgumentException("Recipient ID must be provided.");
         }
         if (dto.getUserId() == null) {
+            log.warn("Validation failed: Missing user ID.");
             throw new IllegalArgumentException("User ID must be provided.");
         }
-        if (feeConfig.getDomestic() == null) {
+        if (feeConfig.getDomestic() == null) { // Could be feeConfig.getWallet() if separated
+            log.error("Validation failed: Domestic fee rate not configured.");
             throw new IllegalStateException("Domestic fee rate not configured in application.properties");
         }
+
+        log.info("Validation passed for Wallet payment request.");
     }
 }
