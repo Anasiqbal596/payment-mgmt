@@ -4,6 +4,7 @@ public class ApplicationConstant {
 
 
     public class APIPaths {
+        public static final String LOGIN = "/login";
         public static final String ALL_HISTORY = "/all-history";
         public static final String PROCESS = "/process";
     }

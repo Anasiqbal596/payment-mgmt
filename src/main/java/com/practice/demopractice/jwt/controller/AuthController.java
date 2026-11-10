@@ -3,6 +3,7 @@ package com.practice.demopractice.jwt.controller;
 import com.practice.demopractice.dto.ResponseDTO;
 import com.practice.demopractice.dto.UserRequestDTO;
 import com.practice.demopractice.jwt.util.JwtUtil;
+import com.practice.demopractice.util.ApplicationConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
+
+import static com.practice.demopractice.util.ApplicationConstant.APIPaths.LOGIN;
 
 @RestController
 @RequestMapping("/api")
@@ -33,7 +36,7 @@ public class AuthController {
         this.jwtUtil = jwtUtil;
     }
 
-    @PostMapping("/login")
+    @PostMapping(LOGIN)
     public ResponseEntity<?> login(@RequestBody UserRequestDTO dto) {
         System.out.println("Login attempt for: " + dto.getUsername());
 

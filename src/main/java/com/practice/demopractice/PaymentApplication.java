@@ -7,10 +7,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
 @EnableTransactionManagement
-public class DemopracticeApplicationMain {
+public class PaymentApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DemopracticeApplicationMain.class, args);
+		SpringApplication.run(PaymentApplication.class, args);
 	}
 
 }

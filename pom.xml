@@ -14,7 +14,7 @@
 
 
 	<groupId>com.practice</groupId>
-	<artifactId>demopractice</artifactId>
+	<artifactId>PaymentApplication</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>demopractice</name>
 	<description>Demo project for Spring Boot</description>

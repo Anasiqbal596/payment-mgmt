@@ -1,4 +1,4 @@
-package com.practice.demopractice.controller;
+package com.practice.demopractice.controller.user;
 
 import com.practice.demopractice.dto.ResponseDTO;
 import com.practice.demopractice.dto.UserRequestDTO;
@@ -15,9 +15,8 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    public ResponseEntity<Object> create(@RequestBody UserRequestDTO abc) {
-        ResponseDTO response = userService.createUser(abc);
-
+    public ResponseEntity<Object> create(@RequestBody UserRequestDTO userRequestDTO) {
+        ResponseDTO response = userService.createUser(userRequestDTO);
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 

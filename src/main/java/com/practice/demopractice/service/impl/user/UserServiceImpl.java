@@ -24,20 +24,27 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseDTO createUser(UserRequestDTO dto) {
         Optional<User> userData = userRepo.findByUsername(dto.getUsername());
-        if (userData.isPresent()) {
-
+        if (userData.isPresent()) { // FIXME this is not a good practice to return FAilure in case of an existing user
             return ResponseDTO.builder()
                     .status("Fail")
                     .statusCode(400)
-                    .message("Username already exists")
+                    .message("Username already exists") //FIXME
                     .build();
 
         }
         try {
 
+            // Need to fix this as it can throw IllegalArgumentException if the role is invalid. Consider validating the role before this line.
+            if (dto.getRole() == null || dto.getRole().isEmpty()) {
+                return ResponseDTO.builder()
+                        .status("fail")
+                        .statusCode(400)
+                        .message("Role is required")
+                        .build();
+            }
             UserRole role = UserRole.valueOf(dto.getRole().toUpperCase());
 
-            User user = User.builder()// avoid overload constructor
+            User user = User.builder() //FIXME: avoid overload constructor
                     .username(dto.getUsername())
                     .password(passwordEncoder.encode(dto.getPassword()))
                     .role(role)
@@ -50,21 +57,21 @@ public class UserServiceImpl implements UserService {
                     .statusCode(201)
                     .message("User created successfully")
                     .data(convertUserToMap(savedUser))
-                    .build();
+                    .build(); //FIXME: hardcoded response here
 
         } catch (ArithmeticException e) {
             System.out.println("Exception: "+e.getMessage()+" path : ");
             for (StackTraceElement el : e.getStackTrace()) {
-                System.out.println(el);
+                System.out.println(el);//FIXME: Handing the exception like this is not a good practice
             }
             return ResponseDTO.builder()
                     .status("fail")
                     .statusCode(400)
-                    .message(e.getMessage())
+                    .message(e.getMessage()) //FIXME : hardcoded response are not good here
                     .build();
 
         }catch (NullPointerException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //FIXME : Hard coded response are not good here
             ResponseDTO fail = ResponseDTO.builder()
                     .status("fail")
                     .statusCode(400)
@@ -73,7 +80,7 @@ public class UserServiceImpl implements UserService {
             return fail;
 
         }catch (IllegalArgumentException e) {
-            e.printStackTrace();
+            e.printStackTrace();  //FIXME : Hard coded response are not good here
             return ResponseDTO.builder()
                     .status("fail")
                     .statusCode(400)
@@ -82,7 +89,7 @@ public class UserServiceImpl implements UserService {
 
         }
         catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace();  //FIXME : Hard coded response are not good here
             return ResponseDTO.builder()
                     .status("fail")
                     .statusCode(400)
