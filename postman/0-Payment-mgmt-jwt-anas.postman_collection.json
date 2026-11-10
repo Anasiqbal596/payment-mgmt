@@ -1,0 +1,2934 @@
+{
+  "info": {
+    "_postman_id": "76f41690-25fa-4feb-b112-dafb6d171690",
+    "name": "0-Payment-mgmt-jwt-anas",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "47833117"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "create-user-1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();\r\n\r\nif (json.data && json.data.id) {\r\n    pm.environment.set(\"payerId\", json.data.id);\r\n}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\": \"user1\",\r\n    \"password\": \"Password123\",\r\n    \"role\": \"USER\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "create-user-1",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"username\": \"user1\",\r\n    \"password\": \"Password123\",\r\n    \"role\": \"USER\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/users",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users"
+                  ]
+                }
+              },
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 05 Nov 2026 20:53:21 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"statusCode\": 201,\n  \"data\": {\n    \"role\": \"USER\",\n    \"id\": 32,\n    \"username\": \"user1\"\n  },\n  \"message\": \"User created successfully\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "create-user-2",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();\r\n\r\nif (json.data && json.data.id) {\r\n    pm.environment.set(\"recipientId\", json.data.id);\r\n}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"user2\",\r\n  \"password\": \"Password123\",\r\n  \"role\": \"USER\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "create-user-2",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"username\": \"user2\",\r\n  \"password\": \"Password123\",\r\n  \"role\": \"USER\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/users",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users"
+                  ]
+                }
+              },
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 10 Nov 2026 21:40:49 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"statusCode\": 201,\n  \"data\": {\n    \"role\": \"USER\",\n    \"id\": 36,\n    \"username\": \"user2\"\n  },\n  \"message\": \"User created successfully\"\n}"
+            },
+            {
+              "name": "Username already exists",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"username\": \"user2\",\r\n  \"password\": \"Password123\",\r\n  \"role\": \"USER\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/users",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 10 Nov 2026 21:42:41 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"Fail\",\n  \"statusCode\": 400,\n  \"message\": \"Username already exists\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "invalid login password",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"user1\",\r\n  \"password\": \"wrong-password\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "login"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "invalid login password",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"username\": \"user1\",\r\n  \"password\": \"wrong-password\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/login",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "login"
+                  ]
+                }
+              },
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 10 Nov 2026 23:04:23 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"error\",\n  \"statusCode\": 401,\n  \"message\": \"Invalid credentials\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "invalid role",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"invalid-role-user\",\r\n  \"password\": \"Password123\",\r\n  \"role\": \"MANAGER\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "invalid role",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"username\": \"invalid-role-user\",\r\n  \"password\": \"Password123\",\r\n  \"role\": \"MANAGER\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/users",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users"
+                  ]
+                }
+              },
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 10 Nov 2026 23:05:53 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"fail\",\n  \"statusCode\": 400,\n  \"message\": \"Invalid role specified. Must be ADMIN or USER\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Delete test users",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/7",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "7"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Delete test users",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/users/7",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users",
+                    "7"
+                  ]
+                }
+              },
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 10 Nov 2026 23:08:44 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"statusCode\": 200,\n  \"message\": \"User deleted successfully\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "create-admin-user",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();\r\n\r\nif (json.data && json.data.id) {\r\n    pm.environment.set(\"adminId\", json.data.id);\r\n}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"admin\",\r\n  \"password\": \"Admin123\",\r\n  \"role\": \"ADMIN\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "create-admin-user",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"username\": \"admin\",\r\n  \"password\": \"Admin123\",\r\n  \"role\": \"ADMIN\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/users",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users"
+                  ]
+                }
+              },
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 05 Nov 2026 20:57:05 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"statusCode\": 201,\n  \"data\": {\n    \"role\": \"ADMIN\",\n    \"id\": 34,\n    \"username\": \"admin\"\n  },\n  \"message\": \"User created successfully\"\n}"
+            },
+            {
+              "name": "Username already exists",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"username\": \"admin\",\r\n  \"password\": \"Admin123\",\r\n  \"role\": \"ADMIN\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/users",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 05 Nov 2026 21:02:26 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"Fail\",\n  \"statusCode\": 400,\n  \"message\": \"Username already exists\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "login-user-1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();\r\n\r\nif (json.data && json.data.token) {\r\n    pm.environment.set(\"payerToken\", json.data.token);\r\n}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"user1\",\r\n  \"password\": \"Password123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "login"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "405-Method not allowed",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"username\": \"user1\",\r\n  \"password\": \"Password123\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/login",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Allow",
+                  "value": "POST"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 05 Nov 2026 21:07:01 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"timestamp\": \"2026-11-05T21:07:01.655+00:00\",\n  \"status\": 405,\n  \"error\": \"Method Not Allowed\",\n  \"path\": \"/api/login\"\n}"
+            },
+            {
+              "name": "JWT-Login successful",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"username\": \"user1\",\r\n  \"password\": \"Password123\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/login",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 05 Nov 2026 22:04:58 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "\n{\n  \"status\": \"success\",\n  \"statusCode\": 200,\n  \"data\": {\n    \"token\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTc5MzkxNTczNSwiZXhwIjoxNzk0MDAyMTM1fQ.arjFxZXP317B6GZRtQqf1D9BH0Y-0Yw3f1QRKfm5b1s\"\n  },\n  \"message\": \"Login successful\"\n}\n"
+            }
+          ]
+        },
+        {
+          "name": "get-all-users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "get-all-users",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/users",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users"
+                  ]
+                }
+              },
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 10 Nov 2026 21:41:39 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"statusCode\": 200,\n  \"data\": [\n    {\n      \"role\": \"USER\",\n      \"id\": 1,\n      \"username\": \"anas\"\n    },\n    {\n      \"role\": \"ADMIN\",\n      \"id\": 2,\n      \"username\": \"Usama\"\n    },\n    {\n      \"role\": \"USER\",\n      \"id\": 3,\n      \"username\": \"Bilal\"\n    },\n    {\n      \"role\": \"USER\",\n      \"id\": 4,\n      \"username\": \"Babar\"\n    },\n    {\n      \"role\": \"ADMIN\",\n      \"id\": 5,\n      \"username\": \"Ali\"\n    },\n    {\n      \"role\": \"USER\",\n      \"id\": 6,\n      \"username\": \"All\"\n    },\n    {\n      \"role\": \"USER\",\n      \"id\": 7,\n      \"username\": \"james\"\n    },\n    {\n      \"role\": \"ADMIN\",\n      \"id\": 8,\n      \"username\": \"james123\"\n    },\n    {\n      \"role\": \"ADMIN\",\n      \"id\": 9,\n      \"username\": \"james1234\"\n    },\n    {\n      \"role\": \"ADMIN\",\n      \"id\": 10,\n      \"username\": \"james7\"\n    },\n    {\n      \"role\": \"ADMIN\",\n      \"id\": 11,\n      \"username\": \"james7v\"\n    },\n    {\n      \"role\": \"ADMIN\",\n      \"id\": 12,\n      \"username\": \"james7bnv\"\n    },\n    {\n      \"role\": \"ADMIN\",\n      \"id\": 13,\n      \"username\": \"jingalala\"\n    },\n    {\n      \"role\": \"ADMIN\",\n      \"id\": 14,\n      \"username\": \"jingalala1\"\n    },\n    {\n      \"role\": \"ADMIN\",\n      \"id\": 15,\n      \"username\": \"jingalala12\"\n    },\n    {\n      \"role\": \"ADMIN\",\n      \"id\": 16,\n      \"username\": \"jingalala122\"\n    },\n    {\n      \"role\": \"ADMIN\",\n      \"id\": 17,\n      \"username\": \"jingalala1022\"\n    },\n    {\n      \"role\": \"ADMIN\",\n      \"id\": 18,\n      \"username\": \"jingalala10220\"\n    },\n    {\n      \"role\": \"ADMIN\",\n      \"id\": 19,\n      \"username\": \"jingalala102264540\"\n    },\n    {\n      \"role\": \"ADMIN\",\n      \"id\": 20,\n      \"username\": \"jingalala1022640540\"\n    },\n    {\n      \"role\": \"ADMIN\",\n      \"id\": 21,\n      \"username\": \"jinagalala1022640540\"\n    },\n    {\n      \"role\": \"USER\",\n      \"id\": 22,\n      \"username\": \"jinagalala1022640540123\"\n    },\n    {\n      \"role\": \"USER\",\n      \"id\": 23,\n      \"username\": \"AAAAAAAAA\"\n    },\n    {\n      \"role\": \"USER\",\n      \"id\": 24,\n      \"username\": \"b\"\n    },\n    {\n      \"role\": \"USER\",\n      \"id\": 25,\n      \"username\": \"ab\"\n    },\n    {\n      \"role\": \"USER\",\n      \"id\": 26,\n      \"username\": \"abc\"\n    },\n    {\n      \"role\": \"USER\",\n      \"id\": 27,\n      \"username\": \"usama123\"\n    },\n    {\n      \"role\": \"ADMIN\",\n      \"id\": 34,\n      \"username\": \"admin\"\n    },\n    {\n      \"role\": \"USER\",\n      \"id\": 35,\n      \"username\": \"user1\"\n    },\n    {\n      \"role\": \"USER\",\n      \"id\": 36,\n      \"username\": \"user2\"\n    }\n  ],\n  \"message\": \"Users retrieved successfully\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "get User 1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/{{payerId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "{{payerId}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "get User 1",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/users/{{payerId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users",
+                    "{{payerId}}"
+                  ]
+                }
+              },
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 10 Nov 2026 21:38:30 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"statusCode\": 200,\n  \"data\": {\n    \"role\": \"USER\",\n    \"id\": 35,\n    \"username\": \"user1\"\n  },\n  \"message\": \"User retrieved successfully\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "get-user-2",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/{{recipientId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "{{recipientId}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "get-user-2",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/users/{{recipientId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users",
+                    "{{recipientId}}"
+                  ]
+                }
+              },
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 10 Nov 2026 21:43:33 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"statusCode\": 200,\n  \"data\": {\n    \"role\": \"USER\",\n    \"id\": 36,\n    \"username\": \"user2\"\n  },\n  \"message\": \"User retrieved successfully\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "create payment from user 1 to user 2",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();\r\n\r\nif (json.data && json.data.id) {\r\n    pm.environment.set(\"paymentId\", json.data.id);\r\n}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"userId\": {{payerId}},\r\n    \"recipientId\": {{recipientId}},\r\n    \"amount\": 100.00,\r\n    \"fee\": 5,\r\n    \"transactionType\": \"DOMESTIC\",\r\n    \"status\": \"PENDING\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/payments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "payments"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "create payment from user 1 to user 2",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"userId\": {{payerId}},\r\n    \"recipientId\": {{recipientId}},\r\n    \"amount\": 100.00,\r\n    \"fee\": 5,\r\n    \"transactionType\": \"DOMESTIC\",\r\n    \"status\": \"PENDING\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/payments",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "payments"
+                  ]
+                }
+              },
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 10 Nov 2026 21:53:31 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"200\",\n  \"statusCode\": 201,\n  \"data\": {\n    \"id\": 14,\n    \"amount\": 100,\n    \"fee\": 5,\n    \"updatedAmount\": null,\n    \"transactionType\": \"DOMESTIC\",\n    \"payerId\": 35,\n    \"recipientId\": 36,\n    \"createdDate\": \"2026-11-11T02:53:31.2649492\",\n    \"status\": \"SUCCESS\"\n  },\n  \"message\": \"Payment successful\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Unhandelled Strateygy payment Error",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"userId\": {{payerId}},\r\n  \"recipientId\": {{recipientId}},\r\n  \"amount\": 100.00,\r\n  \"transactionType\": \"REMITANCE\"//INTERNATIONAL//PEER\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/pay/process",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "pay",
+                "process"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Unhandelled Strateygy payment Error",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"userId\": {{payerId}},\r\n  \"recipientId\": {{recipientId}},\r\n  \"amount\": 100.00,\r\n  \"transactionType\": \"REMITANCE\"//INTERNATIONAL//PEER\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/pay/process",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "pay",
+                    "process"
+                  ]
+                }
+              },
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "38"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 10 Nov 2026 22:11:55 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                }
+              ],
+              "cookie": [],
+              "body": "No processor found for type: REMITANCE"
+            }
+          ]
+        },
+        {
+          "name": "Process Stategy and Factory payment Pattren",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"userId\": {{payerId}},\r\n  \"recipientId\": {{recipientId}},\r\n  \"amount\": 100.00,\r\n  \"transactionType\": \"DOMESTIC\"//INTERNATIONAL//PEER\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/pay/process",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "pay",
+                "process"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Process Stategy and Factory payment Pattren",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"userId\": {{payerId}},\r\n  \"recipientId\": {{recipientId}},\r\n  \"amount\": 100.00,\r\n  \"transactionType\": \"DOMESTIC\"//INTERNATIONAL//PEER\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/pay/process",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "pay",
+                    "process"
+                  ]
+                }
+              },
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "39"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 10 Nov 2026 22:08:34 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "Processed Domestic Payment Successfully"
+            }
+          ]
+        },
+        {
+          "name": "get-all-payments",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "// {\r\n//   \"username\": \"user1\",\r\n//   \"password\": \"Password123\"\r\n// }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/payments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "payments"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "get-all-payments",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"username\": \"user1\",\r\n  \"password\": \"Password123\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/payments",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "payments"
+                  ]
+                }
+              },
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 10 Nov 2026 21:56:13 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"200\",\n  \"statusCode\": 200,\n  \"data\": [\n    {\n      \"id\": 1,\n      \"amount\": 500,\n      \"fee\": 10,\n      \"updatedAmount\": null,\n      \"transactionType\": \"DOMESTIC\",\n      \"payerId\": 1,\n      \"recipientId\": 0,\n      \"createdDate\": \"2025-07-31T14:23:20.205591\",\n      \"status\": \"SUCCESS\"\n    },\n    {\n      \"id\": 2,\n      \"amount\": 500,\n      \"fee\": 10,\n      \"updatedAmount\": null,\n      \"transactionType\": \"INTERNATIONAL\",\n      \"payerId\": 1,\n      \"recipientId\": 0,\n      \"createdDate\": \"2025-07-31T14:24:22.757141\",\n      \"status\": \"SUCCESS\"\n    },\n    {\n      \"id\": 3,\n      \"amount\": 5000000,\n      \"fee\": 25046,\n      \"updatedAmount\": null,\n      \"transactionType\": \"INTERNATIONAL\",\n      \"payerId\": 18,\n      \"recipientId\": 0,\n      \"createdDate\": \"2025-08-03T13:35:22.230567\",\n      \"status\": \"SUCCESS\"\n    },\n    {\n      \"id\": 4,\n      \"amount\": 150,\n      \"fee\": 2,\n      \"updatedAmount\": null,\n      \"transactionType\": \"INTERNATIONAL\",\n      \"payerId\": 18,\n      \"recipientId\": 5,\n      \"createdDate\": \"2025-08-06T14:08:42.314515\",\n      \"status\": \"SUCCESS\"\n    },\n    {\n      \"id\": 5,\n      \"amount\": 150,\n      \"fee\": 2,\n      \"updatedAmount\": null,\n      \"transactionType\": \"INTERNATIONAL\",\n      \"payerId\": 19,\n      \"recipientId\": 5,\n      \"createdDate\": \"2025-08-06T14:09:17.708613\",\n      \"status\": \"SUCCESS\"\n    },\n    {\n      \"id\": 6,\n      \"amount\": 150,\n      \"fee\": 2,\n      \"updatedAmount\": null,\n      \"transactionType\": \"DOMESTIC\",\n      \"payerId\": 19,\n      \"recipientId\": 5,\n      \"createdDate\": \"2025-08-06T14:10:02.79697\",\n      \"status\": \"SUCCESS\"\n    },\n    {\n      \"id\": 7,\n      \"amount\": 150,\n      \"fee\": 2,\n      \"updatedAmount\": null,\n      \"transactionType\": \"DOMESTIC\",\n      \"payerId\": 20,\n      \"recipientId\": 6,\n      \"createdDate\": \"2025-08-06T14:10:17.773381\",\n      \"status\": \"SUCCESS\"\n    },\n    {\n      \"id\": 8,\n      \"amount\": 150,\n      \"fee\": 2,\n      \"updatedAmount\": null,\n      \"transactionType\": \"PEER\",\n      \"payerId\": 21,\n      \"recipientId\": 7,\n      \"createdDate\": \"2025-08-06T14:10:50.856272\",\n      \"status\": \"SUCCESS\"\n    },\n    {\n      \"id\": 9,\n      \"amount\": 150,\n      \"fee\": 2,\n      \"updatedAmount\": null,\n      \"transactionType\": \"REMITANCE\",\n      \"payerId\": 22,\n      \"recipientId\": 9,\n      \"createdDate\": \"2025-08-06T14:11:27.662389\",\n      \"status\": \"SUCCESS\"\n    },\n    {\n      \"id\": 10,\n      \"amount\": 100,\n      \"fee\": 3,\n      \"updatedAmount\": null,\n      \"transactionType\": \"REMITANCE\",\n      \"payerId\": 26,\n      \"recipientId\": 10,\n      \"createdDate\": \"2025-08-06T17:43:34.744897\",\n      \"status\": \"SUCCESS\"\n    },\n    {\n      \"id\": 11,\n      \"amount\": 100,\n      \"fee\": 3,\n      \"updatedAmount\": null,\n      \"transactionType\": \"REMITANCE\",\n      \"payerId\": 27,\n      \"recipientId\": 10,\n      \"createdDate\": \"2025-08-06T18:29:42.626156\",\n      \"status\": \"SUCCESS\"\n    },\n    {\n      \"id\": 12,\n      \"amount\": 100,\n      \"fee\": 3,\n      \"updatedAmount\": null,\n      \"transactionType\": \"REMITANCE\",\n      \"payerId\": 27,\n      \"recipientId\": 10,\n      \"createdDate\": \"2025-08-06T18:56:43.297108\",\n      \"status\": \"SUCCESS\"\n    },\n    {\n      \"id\": 13,\n      \"amount\": 100,\n      \"fee\": 5,\n      \"updatedAmount\": null,\n      \"transactionType\": \"DOMESTIC\",\n      \"payerId\": 35,\n      \"recipientId\": 36,\n      \"createdDate\": \"2026-11-11T02:52:19.780313\",\n      \"status\": \"SUCCESS\"\n    },\n    {\n      \"id\": 14,\n      \"amount\": 100,\n      \"fee\": 5,\n      \"updatedAmount\": null,\n      \"transactionType\": \"DOMESTIC\",\n      \"payerId\": 35,\n      \"recipientId\": 36,\n      \"createdDate\": \"2026-11-11T02:53:31.264949\",\n      \"status\": \"SUCCESS\"\n    }\n  ],\n  \"message\": \"Found 14\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get payment by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "// {\r\n//   \"username\": \"user1\",\r\n//   \"password\": \"Password123\"\r\n// }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/payments/{{paymentId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "payments",
+                "{{paymentId}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Get payment by ID",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"username\": \"user1\",\r\n  \"password\": \"Password123\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/payments/{{paymentId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "payments",
+                    "{{paymentId}}"
+                  ]
+                }
+              },
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 10 Nov 2026 21:59:23 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"500\",\n  \"statusCode\": 404,\n  \"message\": \"Not found\"\n}"
+            },
+            {
+              "name": "Get payment by ID",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"username\": \"user1\",\r\n  \"password\": \"Password123\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/payments/{{paymentId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "payments",
+                    "{{paymentId}}"
+                  ]
+                }
+              },
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 10 Nov 2026 21:59:39 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"200\",\n  \"statusCode\": 200,\n  \"data\": {\n    \"id\": 14,\n    \"amount\": 100,\n    \"fee\": 5,\n    \"updatedAmount\": null,\n    \"transactionType\": \"DOMESTIC\",\n    \"payerId\": 35,\n    \"recipientId\": 36,\n    \"createdDate\": \"2026-11-11T02:53:31.264949\",\n    \"status\": \"SUCCESS\"\n  },\n  \"message\": \"OK\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update payment- amount",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"amount\": 150.00,\r\n  \"fee\": 8,\r\n  \"transactionType\": \"INTERNATIONAL\",\r\n  \"status\": \"SUCCESS\",\r\n  \"recipientId\": {{recipientId}}\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/payments/{{paymentId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "payments",
+                "{{paymentId}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Update payment- amount",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"amount\": 150.00,\r\n  \"fee\": 8,\r\n  \"transactionType\": \"INTERNATIONAL\",\r\n  \"status\": \"SUCCESS\",\r\n  \"recipientId\": {{recipientId}}\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/payments/{{paymentId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "payments",
+                    "{{paymentId}}"
+                  ]
+                }
+              },
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 10 Nov 2026 22:02:35 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"200\",\n  \"statusCode\": 200,\n  \"data\": {\n    \"id\": 14,\n    \"amount\": 150,\n    \"fee\": 8,\n    \"updatedAmount\": null,\n    \"transactionType\": \"INTERNATIONAL\",\n    \"payerId\": 35,\n    \"recipientId\": 36,\n    \"createdDate\": \"2026-11-11T02:53:31.264949\",\n    \"status\": \"SUCCESS\"\n  },\n  \"message\": \"Updated\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "missing token",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/payments/all-history",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "payments",
+                "all-history"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "missing token",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/payments/all-history",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "payments",
+                    "all-history"
+                  ]
+                }
+              },
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 10 Nov 2026 23:07:38 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"timestamp\": \"2026-11-10T23:07:38.434+00:00\",\n  \"status\": 403,\n  \"error\": \"Forbidden\",\n  \"path\": \"/api/payments/all-history\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "get payment by Type and query parameter",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/pay/DOMESTIC/{{payerId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "pay",
+                "DOMESTIC",
+                "{{payerId}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "get payment by Type and query parameter",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/pay/DOMESTIC/{{payerId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "pay",
+                    "DOMESTIC",
+                    "{{payerId}}"
+                  ]
+                }
+              },
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 10 Nov 2026 22:59:45 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n  {\n    \"id\": 13,\n    \"amount\": 100,\n    \"fee\": 5,\n    \"updatedAmount\": null,\n    \"transactionType\": \"DOMESTIC\",\n    \"payerId\": 35,\n    \"recipientId\": 36,\n    \"createdDate\": \"2026-11-11T02:52:19.780313\",\n    \"status\": \"SUCCESS\"\n  },\n  {\n    \"id\": 15,\n    \"amount\": 100,\n    \"fee\": 0.05,\n    \"updatedAmount\": 99.95,\n    \"transactionType\": \"DOMESTIC\",\n    \"payerId\": 35,\n    \"recipientId\": 36,\n    \"createdDate\": \"2026-11-11T03:04:18.258741\",\n    \"status\": \"SUCCESS\"\n  },\n  {\n    \"id\": 16,\n    \"amount\": 100,\n    \"fee\": 0.05,\n    \"updatedAmount\": 99.95,\n    \"transactionType\": \"DOMESTIC\",\n    \"payerId\": 35,\n    \"recipientId\": 36,\n    \"createdDate\": \"2026-11-11T03:06:11.976909\",\n    \"status\": \"SUCCESS\"\n  },\n  {\n    \"id\": 17,\n    \"amount\": 100,\n    \"fee\": 0.05,\n    \"updatedAmount\": 99.95,\n    \"transactionType\": \"DOMESTIC\",\n    \"payerId\": 35,\n    \"recipientId\": 36,\n    \"createdDate\": \"2026-11-11T03:06:13.949788\",\n    \"status\": \"SUCCESS\"\n  },\n  {\n    \"id\": 18,\n    \"amount\": 100,\n    \"fee\": 0.05,\n    \"updatedAmount\": 99.95,\n    \"transactionType\": \"DOMESTIC\",\n    \"payerId\": 35,\n    \"recipientId\": 36,\n    \"createdDate\": \"2026-11-11T03:08:34.342352\",\n    \"status\": \"SUCCESS\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "bearer-Query payment history as normal user",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTc5NDM1MTYxOSwiZXhwIjoxNzk0NDM4MDE5fQ.1eOSM1hy9HljeYtq0bNmjN0_w3yF0En-QXfggGA8Jco",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/payments/all-history",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "payments",
+                "all-history"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Query payment history as normal user",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/payments/all-history",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "payments",
+                    "all-history"
+                  ]
+                }
+              },
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 10 Nov 2026 23:00:34 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"statusCode\": 200,\n  \"data\": [\n    {\n      \"id\": 18,\n      \"amount\": 100,\n      \"fee\": 0.05,\n      \"updatedAmount\": null,\n      \"transactionType\": \"DOMESTIC\",\n      \"payerId\": 35,\n      \"recipientId\": 36,\n      \"createdDate\": \"2026-11-11T03:08:34.342352\",\n      \"status\": \"SUCCESS\"\n    },\n    {\n      \"id\": 17,\n      \"amount\": 100,\n      \"fee\": 0.05,\n      \"updatedAmount\": null,\n      \"transactionType\": \"DOMESTIC\",\n      \"payerId\": 35,\n      \"recipientId\": 36,\n      \"createdDate\": \"2026-11-11T03:06:13.949788\",\n      \"status\": \"SUCCESS\"\n    },\n    {\n      \"id\": 16,\n      \"amount\": 100,\n      \"fee\": 0.05,\n      \"updatedAmount\": null,\n      \"transactionType\": \"DOMESTIC\",\n      \"payerId\": 35,\n      \"recipientId\": 36,\n      \"createdDate\": \"2026-11-11T03:06:11.976909\",\n      \"status\": \"SUCCESS\"\n    },\n    {\n      \"id\": 15,\n      \"amount\": 100,\n      \"fee\": 0.05,\n      \"updatedAmount\": null,\n      \"transactionType\": \"DOMESTIC\",\n      \"payerId\": 35,\n      \"recipientId\": 36,\n      \"createdDate\": \"2026-11-11T03:04:18.258741\",\n      \"status\": \"SUCCESS\"\n    },\n    {\n      \"id\": 14,\n      \"amount\": 150,\n      \"fee\": 8,\n      \"updatedAmount\": null,\n      \"transactionType\": \"INTERNATIONAL\",\n      \"payerId\": 35,\n      \"recipientId\": 36,\n      \"createdDate\": \"2026-11-11T02:53:31.264949\",\n      \"status\": \"SUCCESS\"\n    }\n  ],\n  \"message\": \"Payment history retrieved\",\n  \"pageData\": {\n    \"size\": 5,\n    \"page\": 0,\n    \"pages\": 2,\n    \"total\": 6\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "payments with With pagination",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTc5NDM1MTYxOSwiZXhwIjoxNzk0NDM4MDE5fQ.1eOSM1hy9HljeYtq0bNmjN0_w3yF0En-QXfggGA8Jco",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/payments/all-history?page=0&size=5",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "payments",
+                "all-history"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "payments with With pagination",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/payments/all-history?page=0&size=5",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "payments",
+                    "all-history"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "5"
+                    }
+                  ]
+                }
+              },
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 10 Nov 2026 23:01:03 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"statusCode\": 200,\n  \"data\": [\n    {\n      \"id\": 18,\n      \"amount\": 100,\n      \"fee\": 0.05,\n      \"updatedAmount\": null,\n      \"transactionType\": \"DOMESTIC\",\n      \"payerId\": 35,\n      \"recipientId\": 36,\n      \"createdDate\": \"2026-11-11T03:08:34.342352\",\n      \"status\": \"SUCCESS\"\n    },\n    {\n      \"id\": 17,\n      \"amount\": 100,\n      \"fee\": 0.05,\n      \"updatedAmount\": null,\n      \"transactionType\": \"DOMESTIC\",\n      \"payerId\": 35,\n      \"recipientId\": 36,\n      \"createdDate\": \"2026-11-11T03:06:13.949788\",\n      \"status\": \"SUCCESS\"\n    },\n    {\n      \"id\": 16,\n      \"amount\": 100,\n      \"fee\": 0.05,\n      \"updatedAmount\": null,\n      \"transactionType\": \"DOMESTIC\",\n      \"payerId\": 35,\n      \"recipientId\": 36,\n      \"createdDate\": \"2026-11-11T03:06:11.976909\",\n      \"status\": \"SUCCESS\"\n    },\n    {\n      \"id\": 15,\n      \"amount\": 100,\n      \"fee\": 0.05,\n      \"updatedAmount\": null,\n      \"transactionType\": \"DOMESTIC\",\n      \"payerId\": 35,\n      \"recipientId\": 36,\n      \"createdDate\": \"2026-11-11T03:04:18.258741\",\n      \"status\": \"SUCCESS\"\n    },\n    {\n      \"id\": 14,\n      \"amount\": 150,\n      \"fee\": 8,\n      \"updatedAmount\": null,\n      \"transactionType\": \"INTERNATIONAL\",\n      \"payerId\": 35,\n      \"recipientId\": 36,\n      \"createdDate\": \"2026-11-11T02:53:31.264949\",\n      \"status\": \"SUCCESS\"\n    }\n  ],\n  \"message\": \"Payment history retrieved\",\n  \"pageData\": {\n    \"size\": 5,\n    \"page\": 0,\n    \"pages\": 2,\n    \"total\": 6\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Filter by Query Param = transaction type",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTc5NDM1MTYxOSwiZXhwIjoxNzk0NDM4MDE5fQ.1eOSM1hy9HljeYtq0bNmjN0_w3yF0En-QXfggGA8Jco",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/payments/all-history?transactionType=DOMESTIC",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "payments",
+                "all-history"
+              ],
+              "query": [
+                {
+                  "key": "transactionType",
+                  "value": "DOMESTIC"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Filter by Query Param = transaction type",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/payments/all-history?transactionType=DOMESTIC",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "payments",
+                    "all-history"
+                  ],
+                  "query": [
+                    {
+                      "key": "transactionType",
+                      "value": "DOMESTIC"
+                    }
+                  ]
+                }
+              },
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 10 Nov 2026 23:01:19 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"timestamp\": \"2026-11-10T23:01:19.594+00:00\",\n  \"status\": 403,\n  \"error\": \"Forbidden\",\n  \"path\": \"/api/payments/all-history\"\n}"
+            },
+            {
+              "name": "Filter by Query Param = transaction type",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/payments/all-history?transactionType=DOMESTIC",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "payments",
+                    "all-history"
+                  ],
+                  "query": [
+                    {
+                      "key": "transactionType",
+                      "value": "DOMESTIC"
+                    }
+                  ]
+                }
+              },
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 10 Nov 2026 23:01:35 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"statusCode\": 200,\n  \"data\": [\n    {\n      \"id\": 18,\n      \"amount\": 100,\n      \"fee\": 0.05,\n      \"updatedAmount\": null,\n      \"transactionType\": \"DOMESTIC\",\n      \"payerId\": 35,\n      \"recipientId\": 36,\n      \"createdDate\": \"2026-11-11T03:08:34.342352\",\n      \"status\": \"SUCCESS\"\n    },\n    {\n      \"id\": 17,\n      \"amount\": 100,\n      \"fee\": 0.05,\n      \"updatedAmount\": null,\n      \"transactionType\": \"DOMESTIC\",\n      \"payerId\": 35,\n      \"recipientId\": 36,\n      \"createdDate\": \"2026-11-11T03:06:13.949788\",\n      \"status\": \"SUCCESS\"\n    },\n    {\n      \"id\": 16,\n      \"amount\": 100,\n      \"fee\": 0.05,\n      \"updatedAmount\": null,\n      \"transactionType\": \"DOMESTIC\",\n      \"payerId\": 35,\n      \"recipientId\": 36,\n      \"createdDate\": \"2026-11-11T03:06:11.976909\",\n      \"status\": \"SUCCESS\"\n    },\n    {\n      \"id\": 15,\n      \"amount\": 100,\n      \"fee\": 0.05,\n      \"updatedAmount\": null,\n      \"transactionType\": \"DOMESTIC\",\n      \"payerId\": 35,\n      \"recipientId\": 36,\n      \"createdDate\": \"2026-11-11T03:04:18.258741\",\n      \"status\": \"SUCCESS\"\n    },\n    {\n      \"id\": 13,\n      \"amount\": 100,\n      \"fee\": 5,\n      \"updatedAmount\": null,\n      \"transactionType\": \"DOMESTIC\",\n      \"payerId\": 35,\n      \"recipientId\": 36,\n      \"createdDate\": \"2026-11-11T02:52:19.780313\",\n      \"status\": \"SUCCESS\"\n    }\n  ],\n  \"message\": \"Payment history retrieved\",\n  \"pageData\": {\n    \"size\": 5,\n    \"page\": 0,\n    \"pages\": 1,\n    \"total\": 5\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Filter by status query param",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTc5NDM1MTYxOSwiZXhwIjoxNzk0NDM4MDE5fQ.1eOSM1hy9HljeYtq0bNmjN0_w3yF0En-QXfggGA8Jco",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/payments/all-history?status=SUCCESS",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "payments",
+                "all-history"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "SUCCESS"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Filter by status query param",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/payments/all-history?status=SUCCESS",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "payments",
+                    "all-history"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "SUCCESS"
+                    }
+                  ]
+                }
+              },
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 10 Nov 2026 23:01:57 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"statusCode\": 200,\n  \"data\": [\n    {\n      \"id\": 18,\n      \"amount\": 100,\n      \"fee\": 0.05,\n      \"updatedAmount\": null,\n      \"transactionType\": \"DOMESTIC\",\n      \"payerId\": 35,\n      \"recipientId\": 36,\n      \"createdDate\": \"2026-11-11T03:08:34.342352\",\n      \"status\": \"SUCCESS\"\n    },\n    {\n      \"id\": 17,\n      \"amount\": 100,\n      \"fee\": 0.05,\n      \"updatedAmount\": null,\n      \"transactionType\": \"DOMESTIC\",\n      \"payerId\": 35,\n      \"recipientId\": 36,\n      \"createdDate\": \"2026-11-11T03:06:13.949788\",\n      \"status\": \"SUCCESS\"\n    },\n    {\n      \"id\": 16,\n      \"amount\": 100,\n      \"fee\": 0.05,\n      \"updatedAmount\": null,\n      \"transactionType\": \"DOMESTIC\",\n      \"payerId\": 35,\n      \"recipientId\": 36,\n      \"createdDate\": \"2026-11-11T03:06:11.976909\",\n      \"status\": \"SUCCESS\"\n    },\n    {\n      \"id\": 15,\n      \"amount\": 100,\n      \"fee\": 0.05,\n      \"updatedAmount\": null,\n      \"transactionType\": \"DOMESTIC\",\n      \"payerId\": 35,\n      \"recipientId\": 36,\n      \"createdDate\": \"2026-11-11T03:04:18.258741\",\n      \"status\": \"SUCCESS\"\n    },\n    {\n      \"id\": 14,\n      \"amount\": 150,\n      \"fee\": 8,\n      \"updatedAmount\": null,\n      \"transactionType\": \"INTERNATIONAL\",\n      \"payerId\": 35,\n      \"recipientId\": 36,\n      \"createdDate\": \"2026-11-11T02:53:31.264949\",\n      \"status\": \"SUCCESS\"\n    }\n  ],\n  \"message\": \"Payment history retrieved\",\n  \"pageData\": {\n    \"size\": 5,\n    \"page\": 0,\n    \"pages\": 2,\n    \"total\": 6\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Filter by date-Query param",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTc5NDM1MTYxOSwiZXhwIjoxNzk0NDM4MDE5fQ.1eOSM1hy9HljeYtq0bNmjN0_w3yF0En-QXfggGA8Jco",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/payments/all-history?startDate=2025-01-01&endDate=2026-12-31",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "payments",
+                "all-history"
+              ],
+              "query": [
+                {
+                  "key": "startDate",
+                  "value": "2025-01-01"
+                },
+                {
+                  "key": "endDate",
+                  "value": "2026-12-31"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Filter by date-Query param",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/payments/all-history?startDate=2025-01-01&endDate=2026-12-31",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "payments",
+                    "all-history"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "2025-01-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-12-31"
+                    }
+                  ]
+                }
+              },
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 10 Nov 2026 23:02:21 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"statusCode\": 200,\n  \"data\": [\n    {\n      \"id\": 18,\n      \"amount\": 100,\n      \"fee\": 0.05,\n      \"updatedAmount\": null,\n      \"transactionType\": \"DOMESTIC\",\n      \"payerId\": 35,\n      \"recipientId\": 36,\n      \"createdDate\": \"2026-11-11T03:08:34.342352\",\n      \"status\": \"SUCCESS\"\n    },\n    {\n      \"id\": 17,\n      \"amount\": 100,\n      \"fee\": 0.05,\n      \"updatedAmount\": null,\n      \"transactionType\": \"DOMESTIC\",\n      \"payerId\": 35,\n      \"recipientId\": 36,\n      \"createdDate\": \"2026-11-11T03:06:13.949788\",\n      \"status\": \"SUCCESS\"\n    },\n    {\n      \"id\": 16,\n      \"amount\": 100,\n      \"fee\": 0.05,\n      \"updatedAmount\": null,\n      \"transactionType\": \"DOMESTIC\",\n      \"payerId\": 35,\n      \"recipientId\": 36,\n      \"createdDate\": \"2026-11-11T03:06:11.976909\",\n      \"status\": \"SUCCESS\"\n    },\n    {\n      \"id\": 15,\n      \"amount\": 100,\n      \"fee\": 0.05,\n      \"updatedAmount\": null,\n      \"transactionType\": \"DOMESTIC\",\n      \"payerId\": 35,\n      \"recipientId\": 36,\n      \"createdDate\": \"2026-11-11T03:04:18.258741\",\n      \"status\": \"SUCCESS\"\n    },\n    {\n      \"id\": 14,\n      \"amount\": 150,\n      \"fee\": 8,\n      \"updatedAmount\": null,\n      \"transactionType\": \"INTERNATIONAL\",\n      \"payerId\": 35,\n      \"recipientId\": 36,\n      \"createdDate\": \"2026-11-11T02:53:31.264949\",\n      \"status\": \"SUCCESS\"\n    }\n  ],\n  \"message\": \"Payment history retrieved\",\n  \"pageData\": {\n    \"size\": 5,\n    \"page\": 0,\n    \"pages\": 2,\n    \"total\": 6\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "get all payments with al filters",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTc5NDM1MTYxOSwiZXhwIjoxNzk0NDM4MDE5fQ.1eOSM1hy9HljeYtq0bNmjN0_w3yF0En-QXfggGA8Jco",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/payments/all-history?startDate=2025-01-01&endDate=2026-12-31&transactionType=DOMESTIC&status=SUCCESS&page=0&size=5",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "payments",
+                "all-history"
+              ],
+              "query": [
+                {
+                  "key": "startDate",
+                  "value": "2025-01-01"
+                },
+                {
+                  "key": "endDate",
+                  "value": "2026-12-31"
+                },
+                {
+                  "key": "transactionType",
+                  "value": "DOMESTIC"
+                },
+                {
+                  "key": "status",
+                  "value": "SUCCESS"
+                },
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "get all payments with al filters",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/payments/all-history?startDate=2025-01-01&endDate=2026-12-31&transactionType=DOMESTIC&status=SUCCESS&page=0&size=5",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "payments",
+                    "all-history"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "2025-01-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-12-31"
+                    },
+                    {
+                      "key": "transactionType",
+                      "value": "DOMESTIC"
+                    },
+                    {
+                      "key": "status",
+                      "value": "SUCCESS"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "5"
+                    }
+                  ]
+                }
+              },
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 10 Nov 2026 23:02:53 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"statusCode\": 200,\n  \"data\": [\n    {\n      \"id\": 18,\n      \"amount\": 100,\n      \"fee\": 0.05,\n      \"updatedAmount\": null,\n      \"transactionType\": \"DOMESTIC\",\n      \"payerId\": 35,\n      \"recipientId\": 36,\n      \"createdDate\": \"2026-11-11T03:08:34.342352\",\n      \"status\": \"SUCCESS\"\n    },\n    {\n      \"id\": 17,\n      \"amount\": 100,\n      \"fee\": 0.05,\n      \"updatedAmount\": null,\n      \"transactionType\": \"DOMESTIC\",\n      \"payerId\": 35,\n      \"recipientId\": 36,\n      \"createdDate\": \"2026-11-11T03:06:13.949788\",\n      \"status\": \"SUCCESS\"\n    },\n    {\n      \"id\": 16,\n      \"amount\": 100,\n      \"fee\": 0.05,\n      \"updatedAmount\": null,\n      \"transactionType\": \"DOMESTIC\",\n      \"payerId\": 35,\n      \"recipientId\": 36,\n      \"createdDate\": \"2026-11-11T03:06:11.976909\",\n      \"status\": \"SUCCESS\"\n    },\n    {\n      \"id\": 15,\n      \"amount\": 100,\n      \"fee\": 0.05,\n      \"updatedAmount\": null,\n      \"transactionType\": \"DOMESTIC\",\n      \"payerId\": 35,\n      \"recipientId\": 36,\n      \"createdDate\": \"2026-11-11T03:04:18.258741\",\n      \"status\": \"SUCCESS\"\n    },\n    {\n      \"id\": 13,\n      \"amount\": 100,\n      \"fee\": 5,\n      \"updatedAmount\": null,\n      \"transactionType\": \"DOMESTIC\",\n      \"payerId\": 35,\n      \"recipientId\": 36,\n      \"createdDate\": \"2026-11-11T02:52:19.780313\",\n      \"status\": \"SUCCESS\"\n    }\n  ],\n  \"message\": \"Payment history retrieved\",\n  \"pageData\": {\n    \"size\": 5,\n    \"page\": 0,\n    \"pages\": 1,\n    \"total\": 5\n  }\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": ""
+    },
+    {
+      "key": "recipientId",
+      "value": ""
+    },
+    {
+      "key": "payerId",
+      "value": ""
+    },
+    {
+      "key": "paymentId",
+      "value": ""
+    }
+  ]
+}
